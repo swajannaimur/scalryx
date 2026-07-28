@@ -8,7 +8,11 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-[var(--header)] backdrop-blur-xl">
       <SectionShell className="flex h-[68px] items-center justify-between">
-        <a aria-label="Scalryx home" href="#home">
+        <a
+          aria-label="Scalryx home"
+          className="inline-flex min-h-11 items-center"
+          href="#home"
+        >
           <Logo />
         </a>
 
