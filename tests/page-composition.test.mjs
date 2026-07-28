@@ -131,3 +131,19 @@ test("hero and assessment use the premium console composition", async () => {
   assert.match(resultStep, /premium-panel/);
   assert.match(header, /premium-header/);
 });
+
+test("every marketing section uses the premium visual language", async () => {
+  const sections = await Promise.all([
+    source("app/components/landing/audience-section.tsx"),
+    source("app/components/landing/trust-section.tsx"),
+    source("app/components/landing/resources-section.tsx"),
+    source("app/components/landing/videos-section.tsx"),
+    source("app/components/landing/deals-section.tsx"),
+    source("app/components/landing/newsletter-section.tsx"),
+  ]);
+
+  for (const section of sections) {
+    assert.match(section, /data-premium-section/);
+    assert.match(section, /premium-(?:panel|card|button|eyebrow)/);
+  }
+});
