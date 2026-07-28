@@ -67,6 +67,24 @@ test("changing business with answers requires explicit reset confirmation", () =
   assert.deepEqual(changed.answers, {});
 });
 
+test("direct business selection cannot discard answers without confirmation", () => {
+  const answered = {
+    ...initialAssessmentState,
+    businessType: "ecommerce",
+    view: "questions",
+    answers: { "ecommerce-revenue": "revenue-under-5k" },
+  };
+
+  const pending = assessmentReducer(answered, {
+    type: "select-business",
+    businessType: "agency",
+  });
+
+  assert.equal(pending.businessType, "ecommerce");
+  assert.equal(pending.pendingBusinessType, "agency");
+  assert.deepEqual(pending.answers, answered.answers);
+});
+
 test("restart removes every answer and returns to business selection", () => {
   const restarted = assessmentReducer(
     {
@@ -156,4 +174,82 @@ test("previous at the first question returns to business selection", () => {
 
   assert.equal(previous.view, "business-type");
   assert.equal(previous.questionIndex, 0);
+});
+
+test("invalid question and option identifiers are ignored", () => {
+  const selected = assessmentReducer(initialAssessmentState, {
+    type: "select-business",
+    businessType: "saas",
+  });
+
+  assert.equal(
+    assessmentReducer(selected, {
+      type: "answer",
+      questionId: "not-a-question",
+      optionId: "not-an-option",
+    }),
+    selected,
+  );
+  assert.equal(
+    assessmentReducer(selected, {
+      type: "answer",
+      questionId: "saas-mrr",
+      optionId: "not-an-option",
+    }),
+    selected,
+  );
+});
+
+test("corrupted question indices normalize without escaping their bank", () => {
+  const selected = assessmentReducer(initialAssessmentState, {
+    type: "select-business",
+    businessType: "agency",
+  });
+  const corrupted = { ...selected, questionIndex: 99 };
+  const next = assessmentReducer(corrupted, { type: "next" });
+
+  assert.equal(next.questionIndex, 9);
+  assert.equal(next.error, "Choose an answer to continue.");
+
+  const negative = assessmentReducer(
+    { ...selected, questionIndex: -4 },
+    { type: "previous" },
+  );
+  assert.equal(negative.questionIndex, 0);
+  assert.equal(negative.view, "business-type");
+});
+
+test("cancellation clears a pending business change and empty confirmation is a no-op", () => {
+  const selected = assessmentReducer(initialAssessmentState, {
+    type: "select-business",
+    businessType: "service",
+  });
+  const unchanged = assessmentReducer(selected, { type: "confirm-business-change" });
+  const cancelled = assessmentReducer(
+    { ...selected, pendingBusinessType: "agency" },
+    { type: "cancel-business-change" },
+  );
+
+  assert.equal(unchanged, selected);
+  assert.equal(cancelled.pendingBusinessType, null);
+  assert.equal(cancelled.businessType, "service");
+});
+
+test("reducer leaves frozen state and answer records unchanged", () => {
+  const selected = Object.freeze({
+    ...initialAssessmentState,
+    businessType: "ecommerce",
+    view: "questions",
+    answers: Object.freeze({}),
+  });
+
+  const answered = assessmentReducer(selected, {
+    type: "answer",
+    questionId: "ecommerce-revenue",
+    optionId: "revenue-under-5k",
+  });
+
+  assert.deepEqual(selected.answers, {});
+  assert.notEqual(answered.answers, selected.answers);
+  assert.equal(answered.answers["ecommerce-revenue"], "revenue-under-5k");
 });

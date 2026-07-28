@@ -104,6 +104,22 @@ export function assessmentReducer(
 ): AssessmentState {
   switch (action.type) {
     case "select-business":
+      if (Object.keys(state.answers).length > 0 && state.businessType) {
+        if (state.businessType === action.businessType) {
+          return {
+            ...withNormalizedQuestionIndex(state),
+            view: "questions",
+            pendingBusinessType: null,
+            error: "",
+          };
+        }
+
+        return {
+          ...state,
+          pendingBusinessType: action.businessType,
+          error: "",
+        };
+      }
       return startBusiness(action.businessType);
 
     case "answer": {
