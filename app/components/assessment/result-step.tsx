@@ -1,4 +1,5 @@
 import type { AssessmentResult } from "../../assessment/scoring";
+import { getStrengthsPresentation } from "../../assessment/result-presentation";
 import { NewsletterTrigger } from "../newsletter/newsletter-trigger";
 
 interface ResultStepProps {
@@ -24,6 +25,8 @@ function scoreSummary(label: AssessmentResult["label"]) {
 }
 
 export function ResultStep({ result, onRestart }: ResultStepProps) {
+  const strengthsPresentation = getStrengthsPresentation(result.strengths);
+
   return (
     <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
       <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">Your business health result</p>
@@ -87,8 +90,13 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
       </section>
 
       <div className="mt-7 grid gap-6 lg:grid-cols-2">
-        <section aria-labelledby="strengths-title">
-          <h3 className="text-base font-semibold text-content" id="strengths-title">Strongest areas</h3>
+        <section aria-describedby="strengths-description" aria-labelledby="strengths-title">
+          <h3 className="text-base font-semibold text-content" id="strengths-title">
+            {strengthsPresentation.heading}
+          </h3>
+          <p className="mt-1 text-sm leading-5 text-muted" id="strengths-description">
+            {strengthsPresentation.description}
+          </p>
           <ul className="mt-3 grid gap-2">
             {result.strengths.map((strength) => (
               <li className="rounded-lg border border-line bg-input px-3 py-2 text-sm text-muted" key={strength.category}>

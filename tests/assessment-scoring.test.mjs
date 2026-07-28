@@ -6,6 +6,7 @@ import {
   scoreAssessment,
 } from "../app/assessment/scoring.ts";
 import { getRecommendations } from "../app/assessment/recommendations.ts";
+import { getStrengthsPresentation } from "../app/assessment/result-presentation.ts";
 
 function answersAt(type, healthOptionIndex, revenueOptionIndex = 0) {
   return Object.fromEntries(
@@ -59,6 +60,30 @@ test("weak categories select stable unique vendors", () => {
     ["Harvest", "HubSpot"],
   );
   assert.equal(new Set(ecommerce.recommendations.map((item) => item.name)).size, 3);
+});
+
+test("all-zero results describe their top categories as relative strengths", () => {
+  const result = scoreAssessment("service", answersAt("service", 0));
+
+  assert.equal(result.score, 0);
+  assert.deepEqual(getStrengthsPresentation(result.strengths), {
+    heading: "Relative strengths",
+    description:
+      "These are your highest-scoring categories, but they still need attention.",
+  });
+});
+
+test("healthy top categories retain the strongest-areas presentation", () => {
+  assert.deepEqual(
+    getStrengthsPresentation([
+      { category: "growth", score: 75 },
+      { category: "retention", score: 50 },
+    ]),
+    {
+      heading: "Strongest areas",
+      description: "These categories are currently supporting your business health.",
+    },
+  );
 });
 
 test("incomplete answers are rejected instead of producing a partial score", () => {
