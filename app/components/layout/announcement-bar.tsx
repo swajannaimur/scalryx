@@ -8,9 +8,9 @@ export function AnnouncementBar() {
         aria-hidden="true"
         className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(22,133,255,.2),transparent)]"
       />
-      <SectionShell className="relative flex min-h-11 items-center justify-center gap-3 py-1 text-center text-sm">
+      <SectionShell className="relative flex min-h-11 flex-wrap items-center justify-center gap-x-3 gap-y-0 py-1 text-center text-sm">
         <span className="hidden size-1.5 rounded-full bg-cyan-300 shadow-[0_0_10px_#67e8f9] sm:block" />
-        <p className="font-medium text-blue-50">
+        <p className="text-balance font-medium text-blue-50">
           Join us today — practical ideas for sharper business decisions.
         </p>
         <NewsletterTrigger className="inline-flex min-h-11 items-center rounded-lg px-3 text-sm font-bold text-cyan-200 underline decoration-cyan-300/60 underline-offset-4 transition hover:text-white">

@@ -155,3 +155,10 @@ test("footer completes the premium console experience", async () => {
   assert.match(footer, /premium-panel/);
   assert.match(footer, /icon-glow/);
 });
+
+test("premium announcement can wrap safely on narrow screens", async () => {
+  const announcement = await source("app/components/layout/announcement-bar.tsx");
+
+  assert.match(announcement, /flex min-h-11 flex-wrap items-center/);
+  assert.match(announcement, /text-balance/);
+});
