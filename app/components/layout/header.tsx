@@ -1,7 +1,6 @@
 import { navItems } from "../../data/site-content";
 import { Logo } from "../brand/logo";
 import { NewsletterTrigger } from "../newsletter/newsletter-trigger";
-import { ThemeToggle } from "../theme/theme-toggle";
 import { MobileMenu } from "./mobile-menu";
 import { SectionShell } from "./section-shell";
 
@@ -36,7 +35,6 @@ export function Header() {
           <NewsletterTrigger className="premium-button hidden min-h-11 items-center justify-center rounded-xl px-4 text-sm font-bold sm:inline-flex">
             Join newsletter
           </NewsletterTrigger>
-          <ThemeToggle />
           <MobileMenu />
         </div>
       </SectionShell>

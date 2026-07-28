@@ -1,47 +1,6 @@
 @import "tailwindcss";
 
 :root {
-  color-scheme: light;
-  --background: #f3f7ff;
-  --background-start: #f8fbff;
-  --background-end: #eaf1ff;
-  --foreground: #071225;
-  --muted: #3e526f;
-  --subtle: #586b86;
-  --surface: rgba(255, 255, 255, 0.76);
-  --surface-raised: #ffffff;
-  --input: rgba(246, 249, 255, 0.96);
-  --header: rgba(248, 251, 255, 0.82);
-  --line: rgba(32, 85, 158, 0.16);
-  --line-strong: rgba(16, 100, 220, 0.32);
-  --grid-line: rgba(27, 102, 207, 0.06);
-  --panel-glow: rgba(0, 111, 255, 0.12);
-  --page-glow: rgba(0, 112, 255, 0.14);
-  --shadow: rgba(28, 65, 116, 0.16);
-  --on-brand: #ffffff;
-  --score-track: rgba(74, 96, 130, 0.18);
-  --report-cover-start: #1566bb;
-  --report-cover-end: #0d2e57;
-  --avatar-ring: #f5f7fb;
-  --blue: #086fdb;
-  --blue-bright: #087bea;
-  --assessment-accent-text: #075eae;
-  --assessment-accent-bg: #075eae;
-  --assessment-accent-hover: #064d8d;
-  --assessment-danger: #b42318;
-  --assessment-focus-ring: rgba(7, 94, 174, 0.42);
-  --electric-blue: #086fe8;
-  --electric-cyan: #009ee8;
-  --electric-violet: #6d4cff;
-  --panel-highlight: rgba(255, 255, 255, 0.92);
-  --panel-deep: rgba(235, 243, 255, 0.88);
-  --success: #087f5b;
-  --warning: #a24b08;
-  --glow-soft: rgba(0, 111, 232, 0.18);
-  --glow-strong: rgba(0, 111, 232, 0.3);
-}
-
-[data-theme="dark"] {
   color-scheme: dark;
   --background: #01050d;
   --background-start: #01050d;

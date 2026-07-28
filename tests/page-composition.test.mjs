@@ -33,7 +33,6 @@ test("header and mobile navigation offer only the approved anchor navigation", a
   ]);
 
   assert.match(header, /navItems\.map/);
-  assert.equal((header.match(/<ThemeToggle\s*\/>/g) ?? []).length, 1);
   assert.match(
     header,
     /className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm/,
@@ -104,7 +103,7 @@ test("premium visual system exposes reusable electric-blue surfaces and motion",
   assert.match(css, /--electric-blue:/);
   assert.match(css, /--electric-cyan:/);
   assert.match(css, /--panel-highlight:/);
-  assert.match(css, /\[data-theme="dark"\][\s\S]*--electric-blue:/);
+  assert.match(css, /:root[\s\S]*--electric-blue:/);
   assert.match(css, /\.premium-panel\s*\{/);
   assert.match(css, /\.premium-card\s*\{/);
   assert.match(css, /\.premium-button\s*\{/);
@@ -176,4 +175,20 @@ test("assessment results omit the requested detailed analysis blocks", async () 
   assert.match(resultStep, /Tools worth considering/);
   assert.match(resultStep, /Join the newsletter/);
   assert.match(resultStep, /Restart assessment/);
+});
+
+test("site ships one permanent dark theme without a theme runtime", async () => {
+  const [css, header, layout] = await Promise.all([
+    source("app/globals.css"),
+    source("app/components/layout/header.tsx"),
+    source("app/layout.tsx"),
+  ]);
+  const rootTokens = css.match(/:root\s*\{([\s\S]*?)\n\}/)?.[1] ?? "";
+
+  assert.match(rootTokens, /color-scheme:\s*dark/);
+  assert.match(rootTokens, /--background:\s*#01050d/);
+  assert.doesNotMatch(css, /\[data-theme=/);
+  assert.doesNotMatch(css, /prefers-color-scheme/);
+  assert.doesNotMatch(header, /ThemeToggle|theme-toggle/);
+  assert.doesNotMatch(layout, /theme-state|themeInitializer|dangerouslySetInnerHTML/);
 });
