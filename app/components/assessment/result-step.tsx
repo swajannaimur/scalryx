@@ -98,9 +98,14 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
             {strengthsPresentation.description}
           </p>
           <ul className="mt-3 grid gap-2">
-            {result.strengths.map((strength) => (
-              <li className="rounded-lg border border-line bg-input px-3 py-2 text-sm text-muted" key={strength.category}>
-                <span className="font-medium text-content">{displayCategory(strength.category)}</span> — {strength.score}/100
+            {strengthsPresentation.items.map((strength) => (
+              <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-line bg-input px-3 py-2 text-sm text-muted" key={strength.category}>
+                <span>
+                  <span className="font-medium text-content">{displayCategory(strength.category)}</span> — {strength.score}/100
+                </span>
+                <span className="rounded-full border border-line-strong bg-surface px-2 py-1 text-xs font-semibold text-content">
+                  {strength.qualifier}
+                </span>
               </li>
             ))}
           </ul>

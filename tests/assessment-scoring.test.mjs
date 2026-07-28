@@ -70,18 +70,43 @@ test("all-zero results describe their top categories as relative strengths", () 
     heading: "Relative strengths",
     description:
       "These are your highest-scoring categories, but they still need attention.",
+    items: [
+      { category: "profitability", score: 0, qualifier: "Relative strength" },
+      { category: "capacity", score: 0, qualifier: "Relative strength" },
+    ],
   });
 });
 
-test("healthy top categories retain the strongest-areas presentation", () => {
+test("mixed top categories qualify only the below-60 item as relative", () => {
   assert.deepEqual(
     getStrengthsPresentation([
       { category: "growth", score: 75 },
       { category: "retention", score: 50 },
     ]),
     {
+      heading: "Strength highlights",
+      description: "This result includes both established and relative strengths.",
+      items: [
+        { category: "growth", score: 75, qualifier: "Established strength" },
+        { category: "retention", score: 50, qualifier: "Relative strength" },
+      ],
+    },
+  );
+});
+
+test("all-healthy top categories retain the strongest-areas presentation", () => {
+  assert.deepEqual(
+    getStrengthsPresentation([
+      { category: "growth", score: 75 },
+      { category: "retention", score: 60 },
+    ]),
+    {
       heading: "Strongest areas",
       description: "These categories are currently supporting your business health.",
+      items: [
+        { category: "growth", score: 75, qualifier: "Established strength" },
+        { category: "retention", score: 60, qualifier: "Established strength" },
+      ],
     },
   );
 });
