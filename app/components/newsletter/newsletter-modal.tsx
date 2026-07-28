@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { FormEventHandler, Ref } from "react";
 import { createPortal } from "react-dom";
 import type { NewsletterState } from "../../newsletter/state";
 
@@ -21,6 +22,114 @@ const focusableSelector = [
   "textarea:not([disabled])",
   '[tabindex]:not([tabindex="-1"])',
 ].join(",");
+
+interface NewsletterModalContentProps {
+  closeButtonRef?: Ref<HTMLButtonElement>;
+  dialogRef?: Ref<HTMLDivElement>;
+  emailInputRef?: Ref<HTMLInputElement>;
+  isSubmitting: boolean;
+  onChangeEmail: (email: string) => void;
+  onClose: () => void;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  state: NewsletterState;
+}
+
+export function NewsletterModalContent({
+  closeButtonRef,
+  dialogRef,
+  emailInputRef,
+  isSubmitting,
+  onChangeEmail,
+  onClose,
+  onSubmit,
+  state,
+}: NewsletterModalContentProps) {
+  return (
+    <div
+      aria-describedby="newsletter-description"
+      aria-labelledby="newsletter-title"
+      aria-modal="true"
+      className="modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
+      ref={dialogRef}
+      role="dialog"
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-xl font-semibold text-content" id="newsletter-title">
+            Join the Scalryx newsletter
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-muted" id="newsletter-description">
+            Get practical business insights, useful software recommendations, and curated opportunities—without the noise.
+          </p>
+        </div>
+        <button
+          aria-label="Close newsletter dialog"
+          className="grid size-11 shrink-0 place-items-center rounded-lg border border-line bg-input text-xl text-content transition hover:border-blue-400/70 hover:bg-blue-500/5"
+          onClick={onClose}
+          ref={closeButtonRef}
+          type="button"
+        >
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+
+      {state.status === "success" ? (
+        <div
+          aria-atomic="true"
+          aria-live="polite"
+          className="mt-6 rounded-xl border border-blue-400/30 bg-blue-500/10 p-4"
+          role="status"
+        >
+          <p className="text-sm font-semibold text-content">You are all set for the preview.</p>
+          <p className="mt-2 text-sm leading-6 text-muted">{state.message}</p>
+          <p className="mt-2 text-xs leading-5 text-muted">
+            Live newsletter delivery will begin after a provider is connected.
+          </p>
+        </div>
+      ) : (
+        <form className="mt-6" onSubmit={onSubmit} noValidate>
+          <label className="text-sm font-medium text-content" htmlFor="newsletter-email">
+            Work email
+          </label>
+          <input
+            aria-describedby={
+              state.error
+                ? "newsletter-email-support newsletter-email-error"
+                : "newsletter-email-support"
+            }
+            aria-invalid={Boolean(state.error)}
+            autoComplete="email"
+            className="mt-2 min-h-11 w-full rounded-lg border border-line bg-input px-3 text-sm text-content placeholder:text-subtle"
+            disabled={isSubmitting}
+            id="newsletter-email"
+            name="email"
+            onChange={(event) => onChangeEmail(event.target.value)}
+            placeholder="you@company.com"
+            ref={emailInputRef}
+            required
+            type="email"
+            value={state.email}
+          />
+          <p className="mt-2 text-xs leading-5 text-muted" id="newsletter-email-support">
+            No spam. Unsubscribe whenever you want.
+          </p>
+          {state.error ? (
+            <p className="mt-2 text-sm text-[var(--assessment-danger)]" id="newsletter-email-error" role="alert">
+              {state.error}
+            </p>
+          ) : null}
+          <button
+            className="mt-4 min-h-11 w-full rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)] disabled:cursor-not-allowed disabled:opacity-70"
+            disabled={isSubmitting}
+            type="submit"
+          >
+            {isSubmitting ? "Preparing your preview…" : "Subscribe"}
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
 
 export function NewsletterModal({
   onChangeEmail,
@@ -145,76 +254,16 @@ export function NewsletterModal({
         if (event.target === event.currentTarget) onClose();
       }}
     >
-      <div
-        aria-describedby="newsletter-description"
-        aria-labelledby="newsletter-title"
-        aria-modal="true"
-        className="modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
-        ref={dialogRef}
-        role="dialog"
-      >
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-semibold text-content" id="newsletter-title">
-              Join the Scalryx newsletter
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-muted" id="newsletter-description">
-              Get practical business insights, useful software recommendations, and curated opportunities—without the noise.
-            </p>
-          </div>
-          <button
-            aria-label="Close newsletter dialog"
-            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line bg-input text-xl text-content transition hover:border-blue-400/70 hover:bg-blue-500/5"
-            onClick={onClose}
-            ref={closeButtonRef}
-            type="button"
-          >
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-
-        {state.status === "success" ? (
-          <div className="mt-6 rounded-xl border border-blue-400/30 bg-blue-500/10 p-4">
-            <p className="text-sm font-semibold text-content">You are all set for the preview.</p>
-            <p className="mt-2 text-sm leading-6 text-muted">{state.message}</p>
-            <p className="mt-2 text-xs leading-5 text-muted">
-              Live newsletter delivery will begin after a provider is connected.
-            </p>
-          </div>
-        ) : (
-          <form className="mt-6" onSubmit={handleSubmit} noValidate>
-            <label className="text-sm font-medium text-content" htmlFor="newsletter-email">
-              Work email
-            </label>
-            <input
-              aria-describedby={state.error ? "newsletter-email-error" : undefined}
-              aria-invalid={Boolean(state.error)}
-              autoComplete="email"
-              className="mt-2 min-h-11 w-full rounded-lg border border-line bg-input px-3 text-sm text-content placeholder:text-subtle"
-              disabled={isSubmitting}
-              id="newsletter-email"
-              name="email"
-              onChange={(event) => onChangeEmail(event.target.value)}
-              placeholder="you@company.com"
-              ref={emailInputRef}
-              type="email"
-              value={state.email}
-            />
-            {state.error ? (
-              <p className="mt-2 text-sm text-[var(--assessment-danger)]" id="newsletter-email-error" role="alert">
-                {state.error}
-              </p>
-            ) : null}
-            <button
-              className="mt-4 min-h-11 w-full rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)] disabled:cursor-not-allowed disabled:opacity-70"
-              disabled={isSubmitting}
-              type="submit"
-            >
-              {isSubmitting ? "Preparing your preview…" : "Subscribe"}
-            </button>
-          </form>
-        )}
-      </div>
+      <NewsletterModalContent
+        closeButtonRef={closeButtonRef}
+        dialogRef={dialogRef}
+        emailInputRef={emailInputRef}
+        isSubmitting={isSubmitting}
+        onChangeEmail={onChangeEmail}
+        onClose={onClose}
+        onSubmit={handleSubmit}
+        state={state}
+      />
     </div>,
     document.body,
   );

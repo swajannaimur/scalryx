@@ -1,11 +1,50 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { createRequire } from "node:module";
 import test from "node:test";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { transformSync } from "next/dist/build/swc/index.js";
 import {
   initialNewsletterState,
   newsletterReducer,
   validateEmail,
 } from "../app/newsletter/state.ts";
 import { NewsletterSubmissionController } from "../app/newsletter/submission-controller.ts";
+
+const require = createRequire(import.meta.url);
+
+async function renderNewsletterContent(state) {
+  const source = await readFile(
+    new URL("../app/components/newsletter/newsletter-modal.tsx", import.meta.url),
+    "utf8",
+  );
+  const { code } = transformSync(source, {
+    filename: "newsletter-modal.tsx",
+    jsc: {
+      parser: { syntax: "typescript", tsx: true },
+      transform: { react: { runtime: "automatic" } },
+    },
+    module: { type: "commonjs" },
+  });
+  const componentModule = { exports: {} };
+
+  new Function("exports", "module", "require", code)(
+    componentModule.exports,
+    componentModule,
+    require,
+  );
+
+  return renderToStaticMarkup(
+    createElement(componentModule.exports.NewsletterModalContent, {
+      isSubmitting: false,
+      onChangeEmail() {},
+      onClose() {},
+      onSubmit() {},
+      state,
+    }),
+  );
+}
 
 function deferred() {
   let reject;
@@ -114,4 +153,34 @@ test("the active dialog session submits to an adapter only once while in flight"
 
   request.resolve();
   await firstSubmission;
+});
+
+test("rendered newsletter signup requires email and provides the approved reassurance", async () => {
+  const markup = await renderNewsletterContent({
+    ...initialNewsletterState,
+    error: "Enter a valid email address.",
+    open: true,
+  });
+
+  assert.match(
+    markup,
+    /<input[^>]*aria-describedby="newsletter-email-support newsletter-email-error"/,
+  );
+  assert.match(markup, /<input[^>]*aria-invalid="true"/);
+  assert.match(markup, /<input[^>]*required=""/);
+  assert.match(markup, /No spam\. Unsubscribe whenever you want\./);
+});
+
+test("rendered newsletter success announces the no-address-sent result", async () => {
+  const markup = await renderNewsletterContent({
+    ...initialNewsletterState,
+    message: "Thanks — this preview form is ready, but no address has been sent.",
+    open: true,
+    status: "success",
+  });
+
+  assert.match(markup, /role="status"/);
+  assert.match(markup, /aria-live="polite"/);
+  assert.match(markup, /aria-atomic="true"/);
+  assert.match(markup, /no address has been sent/);
 });
