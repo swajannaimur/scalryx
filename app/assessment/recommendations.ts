@@ -1,11 +1,11 @@
 import type { BusinessType, QuestionCategory } from "./types";
 
 export interface VendorRecommendation {
-  id: string;
-  name: string;
-  description: string;
-  href: string;
-  audience: BusinessType;
+  readonly id: string;
+  readonly name: string;
+  readonly description: string;
+  readonly href: string;
+  readonly audience: BusinessType;
 }
 
 const vendorsById = {
@@ -181,5 +181,7 @@ export function getRecommendations(
     if (selected.length === desiredCount) break;
   }
 
-  return selected.slice(0, desiredCount).map((id) => vendorsById[id]);
+  return selected
+    .slice(0, desiredCount)
+    .map((id) => Object.freeze({ ...vendorsById[id] }));
 }

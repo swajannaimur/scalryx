@@ -123,3 +123,18 @@ test("recommendation mappings cover every business type in stable order", () => 
     ["QuickBooks", "Calendly", "Jobber"],
   );
 });
+
+test("returned recommendations cannot corrupt the internal vendor catalog", () => {
+  const first = getRecommendations("ecommerce", ["profitability"]);
+
+  try {
+    first[0].name = "Corrupted vendor";
+  } catch {
+    // Frozen recommendation records reject mutation in strict-mode modules.
+  }
+
+  assert.equal(
+    getRecommendations("ecommerce", ["profitability"])[0].name,
+    "Shopify",
+  );
+});
