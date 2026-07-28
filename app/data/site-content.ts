@@ -2,7 +2,7 @@ export type Destination = string | null;
 
 export interface NavigationItem {
   label: string;
-  href: Destination;
+  href: string;
 }
 
 export interface Audience {
@@ -194,17 +194,17 @@ export const footerGroups: FooterGroup[] = [
     title: "Company",
     links: [
       { label: "About Scalryx", href: "#about" },
-      { label: "Contact us", href: null },
+      { label: "Contact us", href: "#contact" },
       { label: "Newsletter", href: "#newsletter" },
     ],
   },
   {
     title: "Legal",
     links: [
-      { label: "Privacy Policy", href: null },
-      { label: "Terms and Conditions", href: null },
-      { label: "Refund Policy", href: null },
-      { label: "Affiliate Disclosure", href: null },
+      { label: "Privacy Policy", href: "#footer" },
+      { label: "Terms and Conditions", href: "#footer" },
+      { label: "Refund Policy", href: "#footer" },
+      { label: "Affiliate Disclosure", href: "#affiliate-disclosure" },
     ],
   },
 ];

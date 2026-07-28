@@ -2,8 +2,7 @@
 
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import { navItems } from "../../data/landing";
-import { ButtonLink } from "../ui/button-link";
+import { navItems } from "../../data/site-content";
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -30,7 +29,7 @@ export function MobileMenu() {
           <div className="flex flex-col">
             {navItems.map((item) => (
               <a
-                className="border-b border-line px-2 py-3 text-sm text-muted transition hover:text-content"
+                className="flex min-h-11 items-center border-b border-line px-2 py-3 text-sm text-muted transition hover:text-content"
                 href={item.href}
                 key={item.label}
                 onClick={() => setOpen(false)}
@@ -39,9 +38,6 @@ export function MobileMenu() {
               </a>
             ))}
           </div>
-          <ButtonLink className="mt-4 w-full" href="#audit">
-            Start Free Audit
-          </ButtonLink>
         </nav>
       )}
     </div>

@@ -1,23 +1,27 @@
 import { Header } from "./components/layout/header";
 import { Footer } from "./components/layout/footer";
-import { FeaturesSection } from "./components/landing/features-section";
+import { AnnouncementBar } from "./components/layout/announcement-bar";
 import { HeroSection } from "./components/landing/hero-section";
-import { HowItWorks } from "./components/landing/how-it-works";
-import { PricingSection } from "./components/landing/pricing-section";
-import { ProductShowcase } from "./components/landing/product-showcase";
-import { StatsStrip } from "./components/landing/stats-strip";
+import { AudienceSection } from "./components/landing/audience-section";
+import { TrustSection } from "./components/landing/trust-section";
+import { ResourcesSection } from "./components/landing/resources-section";
+import { VideosSection } from "./components/landing/videos-section";
+import { DealsSection } from "./components/landing/deals-section";
+import { NewsletterSection } from "./components/landing/newsletter-section";
 
 export default function Home() {
   return (
     <>
+      <AnnouncementBar />
       <Header />
       <main>
         <HeroSection />
-        <StatsStrip />
-        <FeaturesSection />
-        <HowItWorks />
-        <ProductShowcase />
-        <PricingSection />
+        <AudienceSection />
+        <TrustSection />
+        <ResourcesSection />
+        <VideosSection />
+        <DealsSection />
+        <NewsletterSection />
       </main>
       <Footer />
     </>

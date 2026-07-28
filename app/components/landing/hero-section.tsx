@@ -25,7 +25,7 @@ export function HeroSection() {
             ))}
           </ul>
         </div>
-        <div data-hero-tool={embeddedTool}>
+        <div data-hero-tool={embeddedTool} id="assessment">
           <BusinessAssessment />
         </div>
       </SectionShell>
