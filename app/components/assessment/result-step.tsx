@@ -1,4 +1,5 @@
 import type { AssessmentResult } from "../../assessment/scoring";
+import { NewsletterTrigger } from "../newsletter/newsletter-trigger";
 
 interface ResultStepProps {
   result: AssessmentResult;
@@ -123,9 +124,9 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
           <h3 className="text-sm font-semibold text-content">Get practical growth notes in your inbox.</h3>
           <p className="mt-1 text-xs leading-5 text-muted">One useful issue at a time. No account required.</p>
         </div>
-        <a className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)]" href="#newsletter">
+        <NewsletterTrigger className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)]">
           Join the newsletter
-        </a>
+        </NewsletterTrigger>
       </div>
 
       <button

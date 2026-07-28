@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { NewsletterProvider } from "./components/newsletter/newsletter-provider";
 import { createThemeInitializerScript } from "./components/theme/theme-state";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Scalryx - Scale Smarter",
+  title: "Scalryx — Business Health Assessment",
   description:
-    "AI-powered SaaS stack audits that find bottlenecks, cut software waste, and reveal smarter tools.",
+    "Private business health assessments, practical growth guidance, and curated SaaS recommendations for founders and operators.",
 };
 
 const themeInitializer = createThemeInitializerScript();
@@ -24,7 +25,9 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
       </head>
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <NewsletterProvider>{children}</NewsletterProvider>
+      </body>
     </html>
   );
 }
