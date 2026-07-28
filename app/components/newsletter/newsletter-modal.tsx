@@ -9,6 +9,7 @@ interface NewsletterModalProps {
   onClose: () => void;
   onRestoreFocus: () => void;
   onSubmit: (email: string) => Promise<void>;
+  session: number;
   state: NewsletterState;
 }
 
@@ -26,12 +27,15 @@ export function NewsletterModal({
   onClose,
   onRestoreFocus,
   onSubmit,
+  session,
   state,
 }: NewsletterModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const inFlightSessionRef = useRef<number | null>(null);
+  const [submittingSession, setSubmittingSession] = useState<number | null>(null);
+  const isSubmitting = submittingSession === session;
 
   useEffect(() => {
     if (!state.open) return;
@@ -115,9 +119,22 @@ export function NewsletterModal({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setIsSubmitting(true);
-    await onSubmit(state.email);
-    setIsSubmitting(false);
+    if (inFlightSessionRef.current === session) return;
+
+    const requestSession = session;
+    const email = state.email;
+    inFlightSessionRef.current = requestSession;
+    setSubmittingSession(requestSession);
+    try {
+      await onSubmit(email);
+    } finally {
+      if (inFlightSessionRef.current !== requestSession) return;
+
+      inFlightSessionRef.current = null;
+      setSubmittingSession((currentSession) =>
+        currentSession === requestSession ? null : currentSession,
+      );
+    }
   }
 
   return createPortal(
@@ -174,6 +191,7 @@ export function NewsletterModal({
               aria-invalid={Boolean(state.error)}
               autoComplete="email"
               className="mt-2 min-h-11 w-full rounded-lg border border-line bg-input px-3 text-sm text-content placeholder:text-subtle"
+              disabled={isSubmitting}
               id="newsletter-email"
               name="email"
               onChange={(event) => onChangeEmail(event.target.value)}

@@ -7,7 +7,9 @@ import {
   useMemo,
   useReducer,
   useRef,
+  useState,
 } from "react";
+import { NewsletterSubmissionController } from "../../newsletter/submission-controller";
 import {
   initialNewsletterState,
   newsletterReducer,
@@ -34,10 +36,13 @@ export function NewsletterProvider({
   submissionAdapter = previewNewsletterSubmissionAdapter,
 }: NewsletterProviderProps) {
   const [state, dispatch] = useReducer(newsletterReducer, initialNewsletterState);
+  const [modalSession, setModalSession] = useState(0);
   const openerRef = useRef<HTMLElement | null>(null);
+  const submissionControllerRef = useRef(new NewsletterSubmissionController());
 
   const openNewsletter = useCallback((opener: HTMLElement) => {
     openerRef.current = opener;
+    setModalSession(submissionControllerRef.current.open());
     dispatch({ type: "open" });
   }, []);
 
@@ -47,6 +52,7 @@ export function NewsletterProvider({
   );
 
   const closeNewsletter = useCallback(() => {
+    submissionControllerRef.current.close();
     dispatch({ type: "close" });
   }, []);
 
@@ -61,12 +67,10 @@ export function NewsletterProvider({
       return;
     }
 
-    try {
-      await submissionAdapter(email.trim());
-      dispatch({ type: "submit" });
-    } catch {
-      dispatch({ type: "submission-failed" });
-    }
+    await submissionControllerRef.current.submit(email.trim(), submissionAdapter, {
+      onFailure: () => dispatch({ type: "submission-failed" }),
+      onSuccess: () => dispatch({ type: "submission-succeeded" }),
+    });
   }
 
   return (
@@ -77,6 +81,7 @@ export function NewsletterProvider({
         onClose={closeNewsletter}
         onRestoreFocus={restoreFocus}
         onSubmit={submitNewsletter}
+        session={modalSession}
         state={state}
       />
     </NewsletterContext.Provider>

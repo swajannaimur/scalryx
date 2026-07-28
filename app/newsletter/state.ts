@@ -11,6 +11,7 @@ export type NewsletterAction =
   | { type: "close" }
   | { type: "change-email"; email: string }
   | { type: "submit" }
+  | { type: "submission-succeeded" }
   | { type: "submission-failed" }
   | { type: "reset-success" };
 
@@ -89,6 +90,15 @@ export function newsletterReducer(
         error: "We could not prepare your newsletter preview. Please try again.",
         status: "idle",
         message: "",
+      };
+    case "submission-succeeded":
+      if (!state.open) return state;
+
+      return {
+        ...initialNewsletterState,
+        open: true,
+        status: "success",
+        message: previewSuccessMessage,
       };
     case "reset-success":
       return { ...initialNewsletterState, open: state.open };
