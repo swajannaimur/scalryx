@@ -41,7 +41,7 @@ Primary promise:
 ### 2. Header
 
 - Scalryx logo.
-- Navigation: `Home`, `Assessment`, `Who We Help`, `Resources`, `Deals`,
+- Navigation: `Home`, `Assessment`, `Who We Help`, `Resources` ,
   `About`.
 - Light/dark theme toggle.
 - No login or account action.
