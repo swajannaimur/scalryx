@@ -25,6 +25,11 @@
   --avatar-ring: #f5f7fb;
   --blue: #086fdb;
   --blue-bright: #087bea;
+  --assessment-accent-text: #075eae;
+  --assessment-accent-bg: #075eae;
+  --assessment-accent-hover: #064d8d;
+  --assessment-danger: #b42318;
+  --assessment-focus-ring: rgba(7, 94, 174, 0.42);
 }
 
 [data-theme="dark"] {
@@ -52,6 +57,11 @@
   --avatar-ring: #030a15;
   --blue: #1688ff;
   --blue-bright: #39a2ff;
+  --assessment-accent-text: #6bb6ff;
+  --assessment-accent-bg: #0870c9;
+  --assessment-accent-hover: #075eae;
+  --assessment-danger: #ff9b95;
+  --assessment-focus-ring: rgba(107, 182, 255, 0.48);
 }
 
 @theme inline {

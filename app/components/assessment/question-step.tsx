@@ -1,7 +1,7 @@
-import type { AssessmentQuestion, BusinessType } from "../../assessment/types";
+import type { AssessmentQuestion } from "../../assessment/types";
 
 interface QuestionStepProps {
-  businessType: BusinessType;
+  assessmentTitle: string;
   error: string;
   question: AssessmentQuestion;
   questionIndex: number;
@@ -16,7 +16,7 @@ function displayCategory(category: string) {
 }
 
 export function QuestionStep({
-  businessType,
+  assessmentTitle,
   error,
   question,
   questionIndex,
@@ -35,7 +35,7 @@ export function QuestionStep({
     <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-blue-500">{businessType === "saas" ? "SaaS" : businessType[0].toUpperCase() + businessType.slice(1)} assessment</p>
+          <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">{assessmentTitle}</p>
           <p aria-current="step" className="mt-1 text-sm text-muted">
             Question {questionNumber} of 10
           </p>
@@ -55,14 +55,14 @@ export function QuestionStep({
           role="progressbar"
         >
           <div
-            className="h-full rounded-full bg-blue-500 transition-[width] duration-300"
+            className="h-full rounded-full bg-[var(--assessment-accent-bg)] transition-[width] duration-300"
             style={{ width: `${questionNumber * 10}%` }}
           />
         </div>
       </div>
 
       <fieldset className="mt-6">
-        <legend className="text-xl font-semibold leading-snug text-content sm:text-2xl" id={headingId}>
+        <legend className="text-xl font-semibold leading-snug text-content sm:text-2xl" data-assessment-focus id={headingId} tabIndex={-1}>
           {question.title}
         </legend>
         <p className="mt-2 text-sm leading-6 text-muted" id={guidanceId}>
@@ -76,7 +76,7 @@ export function QuestionStep({
               <label
                 className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 text-sm transition ${
                   selected
-                    ? "border-blue-500 bg-blue-500/10 text-content"
+                    ? "border-[var(--assessment-accent-text)] bg-blue-500/10 text-content"
                     : "border-line bg-input text-muted hover:border-blue-400/70 hover:text-content"
                 }`}
                 htmlFor={optionId}
@@ -100,7 +100,7 @@ export function QuestionStep({
       </fieldset>
 
       {error ? (
-        <p className="mt-3 text-sm font-medium text-red-500" id={errorId} role="alert">
+        <p className="mt-3 text-sm font-medium text-[var(--assessment-danger)]" id={errorId} role="alert">
           {error}
         </p>
       ) : null}
@@ -114,7 +114,7 @@ export function QuestionStep({
           ← Previous
         </button>
         <button
-          className="min-h-11 rounded-lg border border-blue-400/70 bg-blue-600 px-4 text-sm font-semibold text-on-brand shadow-[0_0_22px_rgba(22,136,255,.2)] transition hover:bg-blue-500"
+          className="min-h-11 rounded-lg border border-blue-400/70 bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand shadow-[0_0_22px_rgba(22,136,255,.2)] transition hover:bg-[var(--assessment-accent-hover)]"
           onClick={onNext}
           type="button"
         >

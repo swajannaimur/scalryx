@@ -103,6 +103,26 @@ test("direct business selection cannot discard answers without confirmation", ()
   assert.deepEqual(pending.answers, answered.answers);
 });
 
+test("selecting the active business with answers resumes its questions", () => {
+  const answered = {
+    ...initialAssessmentState,
+    businessType: "ecommerce",
+    view: "business-type",
+    questionIndex: 4,
+    answers: { "ecommerce-revenue": "revenue-under-5k" },
+  };
+
+  const resumed = assessmentReducer(answered, {
+    type: "select-business",
+    businessType: "ecommerce",
+  });
+
+  assert.equal(resumed.view, "questions");
+  assert.equal(resumed.pendingBusinessType, null);
+  assert.equal(resumed.questionIndex, 4);
+  assert.deepEqual(resumed.answers, answered.answers);
+});
+
 test("restart removes every answer and returns to business selection", () => {
   const restarted = assessmentReducer(
     {

@@ -25,14 +25,14 @@ function scoreSummary(label: AssessmentResult["label"]) {
 export function ResultStep({ result, onRestart }: ResultStepProps) {
   return (
     <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
-      <p className="text-sm font-semibold text-blue-500">Your business health result</p>
+      <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">Your business health result</p>
       <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-5xl font-semibold tracking-tight text-content">
             {result.score}
             <span className="text-xl text-muted">/100</span>
           </p>
-          <h2 className="mt-1 text-2xl font-semibold text-content">{result.label}</h2>
+          <h2 className="mt-1 text-2xl font-semibold text-content" data-assessment-focus tabIndex={-1}>{result.label}</h2>
           <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
             {scoreSummary(result.label)}
           </p>
@@ -58,7 +58,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
                 <span className="text-muted">{category.score}/100</span>
               </div>
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--score-track)]">
-                <div className="h-full rounded-full bg-blue-500" style={{ width: `${category.score}%` }} />
+                <div className="h-full rounded-full bg-[var(--assessment-accent-bg)]" style={{ width: `${category.score}%` }} />
               </div>
             </div>
           ))}
@@ -93,7 +93,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
         <ol className="mt-3 grid gap-2">
           {result.nextSteps.map((step, index) => (
             <li className="flex gap-3 rounded-lg border border-line bg-input px-3 py-3 text-sm leading-5 text-muted" key={step}>
-              <span aria-hidden="true" className="font-semibold text-blue-500">{index + 1}.</span>
+              <span aria-hidden="true" className="font-semibold text-[var(--assessment-accent-text)]">{index + 1}.</span>
               {step}
             </li>
           ))}
@@ -123,7 +123,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
           <h3 className="text-sm font-semibold text-content">Get practical growth notes in your inbox.</h3>
           <p className="mt-1 text-xs leading-5 text-muted">One useful issue at a time. No account required.</p>
         </div>
-        <a className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-blue-600 px-4 text-sm font-semibold text-on-brand transition hover:bg-blue-500" href="#newsletter">
+        <a className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)]" href="#newsletter">
           Join the newsletter
         </a>
       </div>

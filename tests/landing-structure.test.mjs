@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import { heroContent } from "../app/data/hero-content.ts";
 
 test("landing page exposes the required sections", async () => {
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
@@ -38,19 +39,17 @@ test("header provides primary navigation and audit action", async () => {
   assert.match(header, /Start Free Audit/);
 });
 
-test("hero presents the approved assessment-first message", async () => {
-  const hero = await readFile(
-    new URL("../app/components/landing/hero-section.tsx", import.meta.url),
-    "utf8",
-  );
-  const assessment = await readFile(
-    new URL("../app/components/assessment/business-assessment.tsx", import.meta.url),
-    "utf8",
-  );
-
-  assert.match(hero, /Find the weak points slowing down your business/);
-  assert.match(hero, /BusinessAssessment/);
-  assert.match(assessment, /Business health assessment/);
+test("hero content contract preserves the assessment-first promise", () => {
+  assert.deepEqual(heroContent, {
+    eyebrow: "Business clarity, without the guesswork",
+    heading: "Find the weak points slowing down your business.",
+    body: "Take a private, five-minute health assessment built for your business model. Get a clear score, practical next steps, and tools worth considering.",
+    trustPoints: [
+      "Private by default",
+      "No account required",
+      "Actionable results",
+    ],
+  });
 });
 
 test("feature and process sections preserve reference content", async () => {
