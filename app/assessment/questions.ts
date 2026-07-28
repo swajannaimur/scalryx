@@ -20,7 +20,7 @@ function scoredOptions(
 }
 
 function contextOptions(
-  choices: readonly [string, string, string, string, string],
+  choices: readonly (readonly [string, string])[],
 ): readonly AnswerOption[] {
   return choices.map(([id, label]) => ({ id, label, score: null }));
 }
@@ -28,7 +28,7 @@ function contextOptions(
 function contextQuestion(
   id: string,
   title: string,
-  options: readonly [string, string, string, string, string],
+  options: readonly (readonly [string, string])[],
 ): AssessmentQuestion {
   return {
     id,
