@@ -7,6 +7,7 @@ import {
   initialAssessmentState,
 } from "../app/assessment/state.ts";
 import { questionBanks } from "../app/assessment/questions.ts";
+import { getBusinessSelectionAction } from "../app/assessment/coordinator.ts";
 
 function answerEveryQuestion(type) {
   let state = assessmentReducer(initialAssessmentState, {
@@ -121,6 +122,30 @@ test("selecting the active business with answers resumes its questions", () => {
   assert.equal(resumed.pendingBusinessType, null);
   assert.equal(resumed.questionIndex, 4);
   assert.deepEqual(resumed.answers, answered.answers);
+});
+
+test("coordinator resumes the active business instead of requesting a reset", () => {
+  const action = getBusinessSelectionAction(
+    {
+      businessType: "agency",
+      answers: { "agency-revenue": "revenue-under-10k" },
+    },
+    "agency",
+  );
+
+  assert.deepEqual(action, { type: "select-business", businessType: "agency" });
+});
+
+test("coordinator requests confirmation before changing an answered business", () => {
+  const action = getBusinessSelectionAction(
+    {
+      businessType: "agency",
+      answers: { "agency-revenue": "revenue-under-10k" },
+    },
+    "saas",
+  );
+
+  assert.deepEqual(action, { type: "request-business-change", businessType: "saas" });
 });
 
 test("restart removes every answer and returns to business selection", () => {

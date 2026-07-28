@@ -3,6 +3,7 @@
 import { useEffect, useReducer, useRef } from "react";
 import { createPortal } from "react-dom";
 import { questionBanks } from "../../assessment/questions";
+import { getBusinessSelectionAction } from "../../assessment/coordinator";
 import { scoreAssessment } from "../../assessment/scoring";
 import {
   assessmentReducer,
@@ -25,6 +26,7 @@ export function BusinessAssessment() {
       : null;
 
   function selectBusiness(businessType: BusinessType) {
+    const selectionAction = getBusinessSelectionAction(state, businessType);
     const hasAnswers = Object.keys(state.answers).length > 0;
     const isChangingBusiness = state.businessType !== businessType;
 
@@ -32,10 +34,7 @@ export function BusinessAssessment() {
       dialogOpenerRef.current = document.activeElement;
     }
 
-    dispatch({
-      type: hasAnswers && isChangingBusiness ? "request-business-change" : "select-business",
-      businessType,
-    });
+    dispatch(selectionAction);
   }
 
   const currentQuestion = state.businessType

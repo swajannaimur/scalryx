@@ -8,3 +8,8 @@ export const heroContent = Object.freeze({
     "Actionable results",
   ]),
 });
+
+export const heroComposition = Object.freeze({
+  content: heroContent,
+  embeddedTool: "business-health-assessment",
+});

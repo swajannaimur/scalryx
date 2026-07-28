@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { heroContent } from "../app/data/hero-content.ts";
+import { heroComposition, heroContent } from "../app/data/hero-content.ts";
 
 test("landing page exposes the required sections", async () => {
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
@@ -50,6 +50,11 @@ test("hero content contract preserves the assessment-first promise", () => {
       "Actionable results",
     ],
   });
+});
+
+test("hero composition pairs the approved content with the embedded assessment", () => {
+  assert.equal(heroComposition.content, heroContent);
+  assert.equal(heroComposition.embeddedTool, "business-health-assessment");
 });
 
 test("feature and process sections preserve reference content", async () => {

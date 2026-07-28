@@ -45,7 +45,7 @@ export function BusinessTypeStep({
     <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
       <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">Step 1 of 2</p>
       <fieldset className="mt-3">
-        <legend className="text-2xl font-semibold tracking-tight text-content">
+        <legend className="text-2xl font-semibold tracking-tight text-content" data-assessment-focus tabIndex={-1}>
           What type of business do you run?
         </legend>
         <p className="mt-2 text-sm leading-6 text-muted">
