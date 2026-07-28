@@ -34,6 +34,10 @@ test("header and mobile navigation offer only the approved anchor navigation", a
 
   assert.match(header, /navItems\.map/);
   assert.equal((header.match(/<ThemeToggle\s*\/>/g) ?? []).length, 1);
+  assert.match(
+    header,
+    /className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm/,
+  );
   assert.doesNotMatch(header, /Log In|Start Free Audit|ButtonLink|ChevronDown/);
   assert.match(mobileMenu, /navItems\.map/);
   assert.doesNotMatch(mobileMenu, /Start Free Audit|ButtonLink/);
@@ -86,7 +90,10 @@ test("task 7 header and footer controls meet the 44px touch-target standard", as
     source("app/components/layout/footer.tsx"),
   ]);
 
-  assert.match(announcement, /min-h-11[^"`]*text-sm/);
+  assert.match(
+    announcement,
+    /<NewsletterTrigger className="inline-flex min-h-11 items-center[^"`]*text-sm/,
+  );
   assert.match(header, /aria-label="Scalryx home"[^>]*className="inline-flex min-h-11 items-center/);
   assert.equal((footer.match(/inline-flex min-h-11 items-center[^\"]*text-sm/g) ?? []).length, 3);
 });
