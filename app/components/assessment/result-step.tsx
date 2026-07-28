@@ -1,14 +1,9 @@
 import type { AssessmentResult } from "../../assessment/scoring";
-import { getStrengthsPresentation } from "../../assessment/result-presentation";
 import { NewsletterTrigger } from "../newsletter/newsletter-trigger";
 
 interface ResultStepProps {
   result: AssessmentResult;
   onRestart: () => void;
-}
-
-function displayCategory(category: string) {
-  return category.replaceAll("-", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 function scoreSummary(label: AssessmentResult["label"]) {
@@ -25,8 +20,6 @@ function scoreSummary(label: AssessmentResult["label"]) {
 }
 
 export function ResultStep({ result, onRestart }: ResultStepProps) {
-  const strengthsPresentation = getStrengthsPresentation(result.strengths);
-
   return (
     <div className="premium-panel section-grid blue-glow rounded-[1.5rem] p-5 sm:p-6">
       <div className="flex items-center justify-between gap-3 border-b border-line pb-4">
@@ -67,77 +60,6 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
       <p className="premium-card mt-5 rounded-xl px-3 py-3 text-xs leading-5 text-muted">
         This assessment offers directional business guidance, not accounting, legal, investment, or tax advice.
       </p>
-
-      <section aria-labelledby="category-breakdown-title" className="mt-7">
-        <h3 className="text-base font-semibold text-content" id="category-breakdown-title">
-          Category breakdown
-        </h3>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          {result.categories.map((category) => (
-            <div className="premium-card rounded-xl p-3.5" key={category.category}>
-              <div className="flex items-center justify-between gap-3 text-sm">
-                <span className="font-medium text-content">{displayCategory(category.category)}</span>
-                <span className="text-muted">{category.score}/100</span>
-              </div>
-              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--score-track)]">
-                <div
-                  className="result-category-fill h-full rounded-full"
-                  style={
-                    {
-                      "--category-score": `${category.score}%`,
-                    } as React.CSSProperties
-                  }
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <div className="mt-7 grid gap-6 lg:grid-cols-2">
-        <section aria-describedby="strengths-description" aria-labelledby="strengths-title">
-          <h3 className="text-base font-semibold text-content" id="strengths-title">
-            {strengthsPresentation.heading}
-          </h3>
-          <p className="mt-1 text-sm leading-5 text-muted" id="strengths-description">
-            {strengthsPresentation.description}
-          </p>
-          <ul className="mt-3 grid gap-2">
-            {strengthsPresentation.items.map((strength) => (
-              <li className="premium-card flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm text-muted" key={strength.category}>
-                <span>
-                  <span className="font-medium text-content">{displayCategory(strength.category)}</span> — {strength.score}/100
-                </span>
-                <span className="rounded-full border border-line-strong bg-blue-500/10 px-2 py-1 text-xs font-semibold text-[var(--assessment-accent-text)]">
-                  {strength.qualifier}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section aria-labelledby="risks-title">
-          <h3 className="text-base font-semibold text-content" id="risks-title">Priority risks</h3>
-          <ol className="mt-3 grid gap-2">
-            {result.risks.map((risk) => (
-              <li className="premium-card rounded-xl px-3 py-2.5 text-sm leading-5 text-muted" key={risk.questionId}>
-                <span className="font-medium text-content">{risk.title}:</span> {risk.explanation}
-              </li>
-            ))}
-          </ol>
-        </section>
-      </div>
-
-      <section aria-labelledby="next-steps-title" className="mt-7">
-        <h3 className="text-base font-semibold text-content" id="next-steps-title">Practical next steps</h3>
-        <ol className="mt-3 grid gap-2">
-          {result.nextSteps.map((step, index) => (
-            <li className="premium-card flex gap-3 rounded-xl px-3 py-3 text-sm leading-5 text-muted" key={step}>
-              <span aria-hidden="true" className="number-glow font-bold">{index + 1}.</span>
-              {step}
-            </li>
-          ))}
-        </ol>
-      </section>
 
       <section aria-labelledby="tools-title" className="mt-7">
         <h3 className="text-base font-semibold text-content" id="tools-title">Tools worth considering</h3>

@@ -162,3 +162,18 @@ test("premium announcement can wrap safely on narrow screens", async () => {
   assert.match(announcement, /flex min-h-11 flex-wrap items-center/);
   assert.match(announcement, /text-balance/);
 });
+
+test("assessment results omit the requested detailed analysis blocks", async () => {
+  const resultStep = await source("app/components/assessment/result-step.tsx");
+
+  assert.doesNotMatch(resultStep, /Category breakdown/);
+  assert.doesNotMatch(resultStep, /getStrengthsPresentation/);
+  assert.doesNotMatch(resultStep, /Priority risks/);
+  assert.doesNotMatch(resultStep, /Practical next steps/);
+  assert.doesNotMatch(resultStep, /result\.(?:categories|strengths|risks|nextSteps)/);
+
+  assert.match(resultStep, /Business health score:/);
+  assert.match(resultStep, /Tools worth considering/);
+  assert.match(resultStep, /Join the newsletter/);
+  assert.match(resultStep, /Restart assessment/);
+});
