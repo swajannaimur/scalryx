@@ -160,17 +160,17 @@ export function BusinessAssessment() {
                 aria-describedby="change-business-description"
                 aria-labelledby="change-business-title"
                 aria-modal="true"
-                className="modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
+                className="premium-panel modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl p-6"
                 ref={dialogRef}
                 role="alertdialog"
               >
                 <h3 className="text-xl font-semibold text-content" id="change-business-title">Start a different assessment?</h3>
                 <p className="mt-2 text-sm leading-6 text-muted" id="change-business-description">Your current answers will be cleared.</p>
                 <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-                  <button className="min-h-11 rounded-lg border border-line bg-input px-4 text-sm font-semibold text-content" onClick={() => dispatch({ type: "cancel-business-change" })} type="button">
+                  <button className="premium-card min-h-11 rounded-xl px-4 text-sm font-semibold text-content" onClick={() => dispatch({ type: "cancel-business-change" })} type="button">
                     Keep my answers
                   </button>
-                  <button className="min-h-11 rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand hover:bg-[var(--assessment-accent-hover)]" onClick={() => dispatch({ type: "confirm-business-change" })} type="button">
+                  <button className="premium-button min-h-11 rounded-xl px-4 text-sm font-bold" onClick={() => dispatch({ type: "confirm-business-change" })} type="button">
                     Clear and continue
                   </button>
                 </div>

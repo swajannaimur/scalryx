@@ -32,15 +32,15 @@ export function QuestionStep({
   const isFinalQuestion = questionNumber === 10;
 
   return (
-    <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <div className="premium-panel section-grid blue-glow rounded-[1.5rem] p-5 sm:p-6">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
         <div>
-          <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">{assessmentTitle}</p>
+          <p className="text-sm font-bold text-[var(--assessment-accent-text)]">{assessmentTitle}</p>
           <p aria-current="step" className="mt-1 text-sm text-muted">
             Question {questionNumber} of 10
           </p>
         </div>
-        <span className="rounded-full border border-line bg-input px-3 py-1 text-xs font-medium text-muted">
+        <span className="rounded-full border border-line-strong bg-blue-500/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-[var(--assessment-accent-text)]">
           {displayCategory(question.category)}
         </span>
       </div>
@@ -51,11 +51,11 @@ export function QuestionStep({
           aria-valuemax={10}
           aria-valuemin={1}
           aria-valuenow={questionNumber}
-          className="h-2 overflow-hidden rounded-full bg-[var(--score-track)]"
+          className="h-2.5 overflow-hidden rounded-full border border-line bg-[var(--score-track)] p-px"
           role="progressbar"
         >
           <div
-            className="assessment-progress-fill h-full rounded-full transition-[width] duration-300"
+            className="assessment-progress-fill h-full rounded-full shadow-[0_0_14px_var(--electric-blue)] transition-[width] duration-500"
             style={
               {
                 "--assessment-progress": `${questionNumber * 10}%`,
@@ -66,7 +66,7 @@ export function QuestionStep({
       </div>
 
       <fieldset className="mt-6">
-        <legend className="text-xl font-semibold leading-snug text-content sm:text-2xl" data-assessment-focus id={headingId} tabIndex={-1}>
+        <legend className="text-xl font-bold leading-snug tracking-tight text-content sm:text-[1.7rem]" data-assessment-focus id={headingId} tabIndex={-1}>
           {question.title}
         </legend>
         <p className="mt-2 text-sm leading-6 text-muted" id={guidanceId}>
@@ -78,10 +78,10 @@ export function QuestionStep({
             const selected = selectedOptionId === option.id;
             return (
               <label
-                className={`flex min-h-11 cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 text-sm transition ${
+                className={`premium-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm ${
                   selected
-                    ? "border-[var(--assessment-accent-text)] bg-blue-500/10 text-content"
-                    : "border-line bg-input text-muted hover:border-blue-400/70 hover:text-content"
+                    ? "border-[var(--assessment-accent-text)] bg-blue-500/15 text-content shadow-[0_0_22px_var(--glow-soft)]"
+                    : "text-muted hover:text-content"
                 }`}
                 htmlFor={optionId}
                 key={option.id}
@@ -111,14 +111,14 @@ export function QuestionStep({
 
       <div className="mt-6 flex flex-col-reverse gap-3 min-[430px]:flex-row min-[430px]:justify-between">
         <button
-          className="min-h-11 rounded-lg border border-line bg-input px-4 text-sm font-semibold text-content transition hover:border-blue-400/70 hover:bg-blue-500/5"
+          className="premium-card min-h-11 rounded-xl px-4 text-sm font-semibold text-content"
           onClick={onPrevious}
           type="button"
         >
           ← Previous
         </button>
         <button
-          className="min-h-11 rounded-lg border border-blue-400/70 bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand shadow-[0_0_22px_rgba(22,136,255,.2)] transition hover:bg-[var(--assessment-accent-hover)]"
+          className="premium-button min-h-11 rounded-xl px-5 text-sm font-bold"
           onClick={onNext}
           type="button"
         >

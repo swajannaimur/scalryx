@@ -28,9 +28,14 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
   const strengthsPresentation = getStrengthsPresentation(result.strengths);
 
   return (
-    <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
-      <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">Your business health result</p>
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-5">
+    <div className="premium-panel section-grid blue-glow rounded-[1.5rem] p-5 sm:p-6">
+      <div className="flex items-center justify-between gap-3 border-b border-line pb-4">
+        <p className="premium-eyebrow">Your business health result</p>
+        <span className="text-xs font-bold uppercase tracking-[0.14em] text-subtle">
+          Analysis complete
+        </span>
+      </div>
+      <div className="mt-6 flex flex-wrap items-center justify-between gap-5">
         <div className="flex min-w-0 flex-1 flex-wrap items-center gap-5">
           <div
             aria-label={`Business health score: ${result.score} out of 100`}
@@ -48,18 +53,18 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
             </p>
           </div>
           <div className="min-w-0 flex-1">
-            <h2 className="mt-1 text-2xl font-semibold text-content" data-assessment-focus tabIndex={-1}>{result.label}</h2>
+            <h2 className="mt-1 text-3xl font-bold tracking-tight text-content" data-assessment-focus tabIndex={-1}>{result.label}</h2>
             <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
               {scoreSummary(result.label)}
             </p>
           </div>
         </div>
-        <span className="rounded-full border border-line bg-input px-3 py-2 text-xs text-muted">
+        <span className="rounded-full border border-line-strong bg-blue-500/10 px-3 py-2 text-xs font-semibold text-muted">
           Revenue context: {result.contextAnswer}
         </span>
       </div>
 
-      <p className="mt-5 rounded-lg border border-line bg-input px-3 py-3 text-xs leading-5 text-muted">
+      <p className="premium-card mt-5 rounded-xl px-3 py-3 text-xs leading-5 text-muted">
         This assessment offers directional business guidance, not accounting, legal, investment, or tax advice.
       </p>
 
@@ -69,7 +74,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
         </h3>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {result.categories.map((category) => (
-            <div className="rounded-lg border border-line bg-input p-3" key={category.category}>
+            <div className="premium-card rounded-xl p-3.5" key={category.category}>
               <div className="flex items-center justify-between gap-3 text-sm">
                 <span className="font-medium text-content">{displayCategory(category.category)}</span>
                 <span className="text-muted">{category.score}/100</span>
@@ -99,11 +104,11 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
           </p>
           <ul className="mt-3 grid gap-2">
             {strengthsPresentation.items.map((strength) => (
-              <li className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-line bg-input px-3 py-2 text-sm text-muted" key={strength.category}>
+              <li className="premium-card flex flex-wrap items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm text-muted" key={strength.category}>
                 <span>
                   <span className="font-medium text-content">{displayCategory(strength.category)}</span> — {strength.score}/100
                 </span>
-                <span className="rounded-full border border-line-strong bg-surface px-2 py-1 text-xs font-semibold text-content">
+                <span className="rounded-full border border-line-strong bg-blue-500/10 px-2 py-1 text-xs font-semibold text-[var(--assessment-accent-text)]">
                   {strength.qualifier}
                 </span>
               </li>
@@ -114,7 +119,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
           <h3 className="text-base font-semibold text-content" id="risks-title">Priority risks</h3>
           <ol className="mt-3 grid gap-2">
             {result.risks.map((risk) => (
-              <li className="rounded-lg border border-line bg-input px-3 py-2 text-sm leading-5 text-muted" key={risk.questionId}>
+              <li className="premium-card rounded-xl px-3 py-2.5 text-sm leading-5 text-muted" key={risk.questionId}>
                 <span className="font-medium text-content">{risk.title}:</span> {risk.explanation}
               </li>
             ))}
@@ -126,8 +131,8 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
         <h3 className="text-base font-semibold text-content" id="next-steps-title">Practical next steps</h3>
         <ol className="mt-3 grid gap-2">
           {result.nextSteps.map((step, index) => (
-            <li className="flex gap-3 rounded-lg border border-line bg-input px-3 py-3 text-sm leading-5 text-muted" key={step}>
-              <span aria-hidden="true" className="font-semibold text-[var(--assessment-accent-text)]">{index + 1}.</span>
+            <li className="premium-card flex gap-3 rounded-xl px-3 py-3 text-sm leading-5 text-muted" key={step}>
+              <span aria-hidden="true" className="number-glow font-bold">{index + 1}.</span>
               {step}
             </li>
           ))}
@@ -139,7 +144,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
         <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {result.recommendations.map((recommendation) => (
             <a
-              className="min-h-28 rounded-lg border border-line bg-input p-3 transition hover:border-blue-400/70 hover:bg-blue-500/5"
+              className="premium-card min-h-28 rounded-xl p-3.5"
               href={recommendation.href}
               key={recommendation.id}
               rel="noopener noreferrer"
@@ -152,18 +157,18 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
         </div>
       </section>
 
-      <div className="mt-7 flex flex-col gap-3 rounded-xl border border-blue-400/25 bg-blue-500/10 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-7 flex flex-col gap-3 rounded-2xl border border-blue-400/30 bg-[linear-gradient(120deg,rgba(22,133,255,.18),rgba(35,199,255,.06))] p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-sm font-semibold text-content">Get practical growth notes in your inbox.</h3>
           <p className="mt-1 text-sm leading-5 text-muted">One useful issue at a time. No account required.</p>
         </div>
-        <NewsletterTrigger className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)]">
+        <NewsletterTrigger className="premium-button inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl px-4 text-sm font-bold">
           Join the newsletter
         </NewsletterTrigger>
       </div>
 
       <button
-        className="mt-5 min-h-11 rounded-lg border border-line bg-input px-4 text-sm font-semibold text-content transition hover:border-blue-400/70 hover:bg-blue-500/5"
+        className="premium-card mt-5 min-h-11 rounded-xl px-4 text-sm font-semibold text-content"
         onClick={onRestart}
         type="button"
       >

@@ -113,3 +113,21 @@ test("premium visual system exposes reusable electric-blue surfaces and motion",
   assert.match(css, /width:\s*min\(calc\(100% - 2rem\), 90rem\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
 });
+
+test("hero and assessment use the premium console composition", async () => {
+  const [hero, businessStep, questionStep, resultStep, header] = await Promise.all([
+    source("app/components/landing/hero-section.tsx"),
+    source("app/components/assessment/business-type-step.tsx"),
+    source("app/components/assessment/question-step.tsx"),
+    source("app/components/assessment/result-step.tsx"),
+    source("app/components/layout/header.tsx"),
+  ]);
+
+  assert.match(hero, /data-premium-hero/);
+  assert.match(hero, /data-capability-strip/);
+  assert.match(hero, /data-assessment-console/);
+  assert.match(businessStep, /premium-panel/);
+  assert.match(questionStep, /premium-panel/);
+  assert.match(resultStep, /premium-panel/);
+  assert.match(header, /premium-header/);
+});

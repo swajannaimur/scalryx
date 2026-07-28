@@ -42,27 +42,32 @@ export function BusinessTypeStep({
   onSelect,
 }: BusinessTypeStepProps) {
   return (
-    <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
-      <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">Step 1 of 2</p>
+    <div className="premium-panel section-grid blue-glow rounded-[1.5rem] p-5 sm:p-6">
+      <div className="mb-5 flex items-center justify-between border-b border-line pb-4">
+        <p className="premium-eyebrow">Step 1 of 2</p>
+        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-subtle">
+          Choose a model
+        </span>
+      </div>
       <fieldset className="mt-3">
-        <legend className="text-2xl font-semibold tracking-tight text-content" data-assessment-focus tabIndex={-1}>
+        <legend className="text-2xl font-bold tracking-tight text-content sm:text-[1.7rem]" data-assessment-focus tabIndex={-1}>
           What type of business do you run?
         </legend>
         <p className="mt-2 text-sm leading-6 text-muted">
           Your questions will adapt to your business model.
         </p>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
           {businessChoices.map((choice) => {
             const inputId = `business-type-${choice.type}`;
             const selected = selectedType === choice.type;
 
             return (
               <label
-                className={`group flex min-h-28 cursor-pointer items-center gap-3 rounded-xl border p-3.5 transition focus-within:border-[var(--assessment-accent-text)] focus-within:ring-2 focus-within:ring-[var(--assessment-focus-ring)] ${
+                className={`premium-card group flex min-h-32 cursor-pointer items-center gap-3 rounded-2xl p-4 focus-within:border-[var(--assessment-accent-text)] focus-within:ring-2 focus-within:ring-[var(--assessment-focus-ring)] ${
                   selected
-                    ? "border-[var(--assessment-accent-text)] bg-blue-500/10"
-                    : "border-line bg-input hover:border-blue-400/70 hover:bg-blue-500/5"
+                    ? "border-[var(--assessment-accent-text)] bg-blue-500/15 shadow-[0_0_28px_var(--glow-soft)]"
+                    : ""
                 }`}
                 htmlFor={inputId}
                 key={choice.type}
@@ -78,12 +83,12 @@ export function BusinessTypeStep({
                 />
                 <span
                   aria-hidden="true"
-                  className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-blue-500/15 text-xs font-bold text-[var(--assessment-accent-text)]"
+                  className="icon-glow flex size-12 shrink-0 items-center justify-center rounded-xl text-xs font-extrabold"
                 >
                   {choice.initials}
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-sm font-semibold text-content">
+                  <span className="block text-base font-bold text-content">
                     {choice.label}
                   </span>
                   <span className="mt-1 block text-sm leading-5 text-muted">
@@ -92,7 +97,7 @@ export function BusinessTypeStep({
                 </span>
                 <span
                   aria-hidden="true"
-                  className="text-lg text-subtle transition group-hover:translate-x-0.5 group-hover:text-[var(--assessment-accent-text)]"
+                  className="text-lg text-subtle transition group-hover:translate-x-1 group-hover:text-[var(--assessment-accent-text)]"
                 >
                   →
                 </span>
