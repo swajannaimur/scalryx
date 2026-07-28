@@ -22,7 +22,7 @@ export function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/[.05] bg-[#020711]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-line bg-[var(--header)] backdrop-blur-xl">
       <SectionShell className="flex h-[68px] items-center justify-between">
         <a aria-label="Scalryx home" href="#">
           <Logo />
@@ -34,7 +34,7 @@ export function Header() {
         >
           {primaryNavItems.map((item) => (
             <a
-              className="inline-flex items-center gap-1 text-[12px] text-slate-400 transition hover:text-white"
+              className="inline-flex items-center gap-1 text-sm text-muted transition hover:text-content"
               href={item.href}
               key={item.label}
             >

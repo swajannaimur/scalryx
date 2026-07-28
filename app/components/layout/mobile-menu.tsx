@@ -14,7 +14,7 @@ export function MobileMenu() {
         aria-controls="mobile-navigation"
         aria-expanded={open}
         aria-label={open ? "Close navigation menu" : "Open navigation menu"}
-        className="inline-flex size-11 items-center justify-center rounded-md border border-white/15 bg-[#071020] text-white"
+        className="inline-flex size-11 items-center justify-center rounded-md border border-line-strong bg-surface-raised text-content"
         onClick={() => setOpen((current) => !current)}
         type="button"
       >
@@ -30,7 +30,7 @@ export function MobileMenu() {
           <div className="flex flex-col">
             {navItems.map((item) => (
               <a
-                className="border-b border-white/[.06] px-2 py-3 text-sm text-slate-300 transition hover:text-white"
+                className="border-b border-line px-2 py-3 text-sm text-muted transition hover:text-content"
                 href={item.href}
                 key={item.label}
                 onClick={() => setOpen(false)}

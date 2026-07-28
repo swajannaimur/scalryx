@@ -8,36 +8,36 @@ export function PricingSection() {
   return (
     <section className="pb-14 pt-10 sm:pb-16" id="pricing">
       <SectionShell className="reveal-on-scroll grid gap-7 lg:grid-cols-[1.08fr_.92fr] lg:items-end">
-        <div>
-          <h2 className="mb-4 px-2 text-[15px] font-medium text-white">
+        <div className="min-w-0">
+          <h2 className="mb-4 px-2 text-[28px] font-semibold text-content sm:text-[36px] xl:text-[40px]">
             Simple Pricing
           </h2>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid min-w-0 gap-4 sm:grid-cols-3">
             {pricingTiers.map((tier) => (
               <article
-                className={`relative flex min-h-[15rem] flex-col rounded-lg border p-5 transition duration-300 hover:-translate-y-1 ${
+                className={`relative flex min-h-[22rem] min-w-0 flex-col rounded-lg border p-6 transition duration-300 hover:-translate-y-1 ${
                   tier.featured
                     ? "border-blue-500/60 bg-blue-500/[.08] shadow-[0_0_30px_rgba(22,136,255,.12)]"
-                    : "border-white/[.1] bg-[#071020]/70 hover:border-blue-400/30"
+                    : "border-line bg-surface hover:border-blue-400/30"
                 }`}
                 key={tier.name}
               >
                 {tier.featured && (
-                  <span className="absolute right-3 top-3 rounded bg-blue-500/15 px-2 py-1 text-[7px] text-blue-300">
+                  <span className="absolute right-3 top-3 rounded bg-blue-500/15 px-2 py-1 text-sm text-blue-300">
                     POPULAR
                   </span>
                 )}
                 <p
-                  className={`text-[12px] ${
-                    tier.featured ? "text-blue-400" : "text-slate-300"
+                  className={`text-base ${
+                    tier.featured ? "text-blue-400" : "text-muted"
                   }`}
                 >
                   {tier.name}
                 </p>
-                <p className="mt-2 text-[27px] font-semibold text-white">
+                <p className="mt-2 text-[32px] font-semibold text-content">
                   {tier.price}
                   {tier.suffix && (
-                    <span className="ml-1 text-[9px] font-normal text-slate-400">
+                    <span className="ml-1 text-sm font-normal text-muted">
                       {tier.suffix}
                     </span>
                   )}
@@ -45,7 +45,7 @@ export function PricingSection() {
                 <ul className="mt-5 space-y-2">
                   {tier.features.map((feature) => (
                     <li
-                      className="flex items-center gap-2 text-[9px] text-slate-400"
+                      className="flex items-center gap-2 text-sm text-muted"
                       key={feature}
                     >
                       <Check className="text-blue-400" size={10} />
@@ -54,7 +54,7 @@ export function PricingSection() {
                   ))}
                 </ul>
                 <ButtonLink
-                  className="mt-auto h-9 w-full px-3 text-[9px]"
+                  className="mt-auto w-full px-3"
                   href="#audit"
                   variant={tier.featured ? "primary" : "secondary"}
                 >
@@ -66,25 +66,25 @@ export function PricingSection() {
         </div>
 
         <div
-          className="rounded-lg border border-white/[.08] bg-[#071020]/70 p-6 sm:p-8"
+          className="min-w-0 rounded-lg border border-line bg-surface p-6 sm:p-8 xl:p-10"
           id="resources"
         >
-          <h2 className="text-[22px] font-semibold text-white">
+          <h2 className="text-[28px] font-semibold text-content sm:text-[36px] xl:text-[40px]">
             Stay Ahead. Stay Scaled.
           </h2>
-          <p className="mt-3 max-w-[24rem] text-[11px] leading-5 text-slate-400">
+          <p className="mt-3 max-w-[24rem] text-base leading-7 text-muted">
             Get weekly SaaS insights, tool recommendations, and tips to scale
             smarter.
           </p>
           <div className="mt-6 flex flex-col gap-2 sm:flex-row">
             <input
               aria-label="Email address"
-              className="h-10 min-w-0 flex-1 rounded-md border border-white/[.08] bg-black/20 px-4 text-[10px] text-white placeholder:text-slate-600"
+              className="h-10 min-w-0 flex-1 rounded-md border border-line bg-input px-4 text-sm text-content placeholder:text-subtle"
               placeholder="Enter your email"
               type="email"
             />
             <button
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-blue-400/60 bg-blue-600 px-5 text-[10px] text-white shadow-[0_0_22px_rgba(22,136,255,.3)] transition hover:bg-blue-500"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-blue-400/60 bg-blue-600 px-5 text-sm text-on-brand shadow-[0_0_22px_rgba(22,136,255,.3)] transition hover:bg-blue-500"
               type="button"
             >
               Subscribe
@@ -96,7 +96,7 @@ export function PricingSection() {
               {[1, 2, 3, 4].map((avatar) => (
                 <Image
                   alt=""
-                  className="size-7 rounded-full border-2 border-[#071020]"
+                  className="size-7 rounded-full border-2 border-[var(--avatar-ring)]"
                   height={40}
                   key={avatar}
                   src={`/avatars/avatar-${avatar}.svg`}
@@ -104,7 +104,7 @@ export function PricingSection() {
                 />
               ))}
             </div>
-            <p className="text-[8px] text-slate-500">
+            <p className="text-sm text-subtle">
               Join 5,000+ founders already on the list.
             </p>
           </div>

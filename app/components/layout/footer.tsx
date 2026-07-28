@@ -13,7 +13,7 @@ const socials = [
 export function Footer() {
   return (
     <footer
-      className="border-t border-blue-400/[.12] bg-[#020711]/80 py-10"
+      className="border-t border-blue-400/[.12] bg-[var(--header)] py-10"
       id="footer"
     >
       <SectionShell
@@ -22,7 +22,7 @@ export function Footer() {
       >
         <div>
           <Logo />
-          <p className="mt-4 max-w-[15rem] text-[9px] leading-4 text-slate-500">
+          <p className="mt-4 max-w-[15rem] text-sm leading-6 text-subtle">
             AI-powered SaaS Stack Audits to help businesses scale smarter and
             spend better.
           </p>
@@ -30,7 +30,7 @@ export function Footer() {
             {socials.map(({ label, icon: Icon }) => (
               <a
                 aria-label={label}
-                className="inline-flex size-8 items-center justify-center rounded border border-white/[.08] text-slate-500 transition hover:border-blue-400/40 hover:text-blue-400"
+                className="inline-flex size-8 items-center justify-center rounded border border-line text-subtle transition hover:border-blue-400/40 hover:text-blue-400"
                 href="#footer"
                 key={label}
               >
@@ -43,14 +43,14 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
           {footerGroups.map((group) => (
             <div key={group.title}>
-              <h2 className="text-[9px] font-medium text-white">
+              <h2 className="text-base font-medium text-content">
                 {group.title}
               </h2>
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-4 space-y-3">
                 {group.links.map((link) => (
                   <li key={link.label}>
                     <a
-                      className="text-[8px] text-slate-500 transition hover:text-white"
+                      className="text-sm leading-6 text-subtle transition hover:text-content"
                       href={link.href}
                     >
                       {link.label}
@@ -63,8 +63,8 @@ export function Footer() {
         </div>
       </SectionShell>
 
-      <SectionShell className="mt-9 border-t border-white/[.06] pt-5 text-right">
-        <p className="text-[8px] text-slate-600">
+      <SectionShell className="mt-9 border-t border-line pt-5 text-right">
+        <p className="text-sm leading-6 text-subtle">
           &copy; 2026 Scalryx. All rights reserved.
         </p>
       </SectionShell>

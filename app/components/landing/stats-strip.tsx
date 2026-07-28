@@ -9,15 +9,15 @@ export function StatsStrip() {
     >
       {stats.map((stat, index) => (
         <div
-          className={`px-2 py-3 text-center md:py-0 ${
-            index > 0 ? "md:border-l md:border-white/[.06]" : ""
+          className={`min-w-0 px-2 py-3 text-center md:py-0 ${
+            index > 0 ? "md:border-l md:border-line" : ""
           }`}
           key={stat.label}
         >
-          <strong className="text-xl font-semibold text-[#b9c8ff] sm:text-2xl">
+          <strong className="text-3xl font-semibold text-content sm:text-4xl">
             {stat.value}
           </strong>
-          <span className="mt-1.5 block text-[9px] text-slate-500">
+          <span className="mt-1.5 block text-sm text-subtle">
             {stat.label}
           </span>
         </div>
