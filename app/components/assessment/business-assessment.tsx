@@ -153,14 +153,14 @@ export function BusinessAssessment() {
       {state.pendingBusinessType && typeof document !== "undefined"
         ? createPortal(
             <div
-              className="fixed inset-0 z-50 grid place-items-center bg-black/55 p-4"
+              className="modal-backdrop fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/55 p-4"
               data-assessment-dialog-root="true"
             >
               <div
                 aria-describedby="change-business-description"
                 aria-labelledby="change-business-title"
                 aria-modal="true"
-                className="w-full max-w-md rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
+                className="modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
                 ref={dialogRef}
                 role="alertdialog"
               >

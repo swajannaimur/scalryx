@@ -139,7 +139,7 @@ export function NewsletterModal({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[70] grid place-items-center bg-black/60 p-4"
+      className="modal-backdrop fixed inset-0 z-[70] grid place-items-center overflow-y-auto bg-black/60 p-4"
       data-newsletter-dialog-root="true"
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
@@ -149,7 +149,7 @@ export function NewsletterModal({
         aria-describedby="newsletter-description"
         aria-labelledby="newsletter-title"
         aria-modal="true"
-        className="w-full max-w-md rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
+        className="modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
         ref={dialogRef}
         role="dialog"
       >
@@ -164,7 +164,7 @@ export function NewsletterModal({
           </div>
           <button
             aria-label="Close newsletter dialog"
-            className="grid size-10 shrink-0 place-items-center rounded-lg border border-line bg-input text-xl text-content transition hover:border-blue-400/70 hover:bg-blue-500/5"
+            className="grid size-11 shrink-0 place-items-center rounded-lg border border-line bg-input text-xl text-content transition hover:border-blue-400/70 hover:bg-blue-500/5"
             onClick={onClose}
             ref={closeButtonRef}
             type="button"

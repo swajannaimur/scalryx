@@ -86,7 +86,7 @@ export function BusinessTypeStep({
                   <span className="block text-sm font-semibold text-content">
                     {choice.label}
                   </span>
-                  <span className="mt-1 block text-xs leading-5 text-muted">
+                  <span className="mt-1 block text-sm leading-5 text-muted">
                     {choice.description}
                   </span>
                 </span>

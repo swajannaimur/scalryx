@@ -55,8 +55,12 @@ export function QuestionStep({
           role="progressbar"
         >
           <div
-            className="h-full rounded-full bg-[var(--assessment-accent-bg)] transition-[width] duration-300"
-            style={{ width: `${questionNumber * 10}%` }}
+            className="assessment-progress-fill h-full rounded-full transition-[width] duration-300"
+            style={
+              {
+                "--assessment-progress": `${questionNumber * 10}%`,
+              } as React.CSSProperties
+            }
           />
         </div>
       </div>

@@ -27,16 +27,29 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
   return (
     <div className="rounded-2xl border border-line bg-surface-raised p-5 shadow-[0_20px_50px_var(--shadow)] sm:p-6">
       <p className="text-sm font-semibold text-[var(--assessment-accent-text)]">Your business health result</p>
-      <div className="mt-4 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-5xl font-semibold tracking-tight text-content">
-            {result.score}
-            <span className="text-xl text-muted">/100</span>
-          </p>
-          <h2 className="mt-1 text-2xl font-semibold text-content" data-assessment-focus tabIndex={-1}>{result.label}</h2>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
-            {scoreSummary(result.label)}
-          </p>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-5">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-5">
+          <div
+            aria-label={`Business health score: ${result.score} out of 100`}
+            className="score-ring"
+            role="img"
+            style={
+              {
+                "--score": `${result.score * 3.6}deg`,
+              } as React.CSSProperties
+            }
+          >
+            <p className="text-center text-3xl font-semibold tracking-tight text-content">
+              {result.score}
+              <span className="block text-xs font-medium tracking-normal text-muted">out of 100</span>
+            </p>
+          </div>
+          <div className="min-w-0 flex-1">
+            <h2 className="mt-1 text-2xl font-semibold text-content" data-assessment-focus tabIndex={-1}>{result.label}</h2>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
+              {scoreSummary(result.label)}
+            </p>
+          </div>
         </div>
         <span className="rounded-full border border-line bg-input px-3 py-2 text-xs text-muted">
           Revenue context: {result.contextAnswer}
@@ -59,7 +72,14 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
                 <span className="text-muted">{category.score}/100</span>
               </div>
               <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-[var(--score-track)]">
-                <div className="h-full rounded-full bg-[var(--assessment-accent-bg)]" style={{ width: `${category.score}%` }} />
+                <div
+                  className="result-category-fill h-full rounded-full"
+                  style={
+                    {
+                      "--category-score": `${category.score}%`,
+                    } as React.CSSProperties
+                  }
+                />
               </div>
             </div>
           ))}
@@ -113,7 +133,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
               target="_blank"
             >
               <span className="block text-sm font-semibold text-content">{recommendation.name} ↗</span>
-              <span className="mt-1 block text-xs leading-5 text-muted">{recommendation.description}</span>
+              <span className="mt-1 block text-sm leading-5 text-muted">{recommendation.description}</span>
             </a>
           ))}
         </div>
@@ -122,7 +142,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
       <div className="mt-7 flex flex-col gap-3 rounded-xl border border-blue-400/25 bg-blue-500/10 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-sm font-semibold text-content">Get practical growth notes in your inbox.</h3>
-          <p className="mt-1 text-xs leading-5 text-muted">One useful issue at a time. No account required.</p>
+          <p className="mt-1 text-sm leading-5 text-muted">One useful issue at a time. No account required.</p>
         </div>
         <NewsletterTrigger className="inline-flex min-h-11 shrink-0 items-center justify-center rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)]">
           Join the newsletter

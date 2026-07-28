@@ -97,6 +97,8 @@ body {
     linear-gradient(180deg, var(--background-start) 0%, var(--background-end) 48%, var(--background-start) 100%);
   color: var(--foreground);
   font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 body::before {
@@ -163,6 +165,73 @@ button {
 .thin-scrollbar {
   scrollbar-color: rgba(57, 162, 255, 0.45) transparent;
   scrollbar-width: thin;
+}
+
+.modal-backdrop {
+  animation: modal-backdrop-in 180ms ease-out both;
+}
+
+.modal-dialog {
+  animation: modal-dialog-in 220ms ease-out both;
+}
+
+.assessment-progress-fill {
+  width: var(--assessment-progress, 0%);
+  background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+}
+
+.score-ring {
+  position: relative;
+  display: grid;
+  width: 7rem;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: conic-gradient(
+    var(--blue) 0deg var(--score, 0deg),
+    var(--score-track) var(--score, 0deg) 360deg
+  );
+  box-shadow: 0 0 30px var(--panel-glow);
+}
+
+.score-ring::before {
+  position: absolute;
+  inset: 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: inherit;
+  background: var(--surface-raised);
+  content: "";
+}
+
+.score-ring > * {
+  position: relative;
+}
+
+.result-category-fill {
+  width: var(--category-score, 0%);
+  background: linear-gradient(90deg, var(--blue), var(--blue-bright));
+}
+
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes enter {
@@ -251,6 +320,11 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .animate-float,
+  .scan-line::after {
+    animation: none !important;
   }
 }
 
