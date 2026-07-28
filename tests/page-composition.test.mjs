@@ -97,3 +97,19 @@ test("task 7 header and footer controls meet the 44px touch-target standard", as
   assert.match(header, /aria-label="Scalryx home"[^>]*className="inline-flex min-h-11 items-center/);
   assert.equal((footer.match(/inline-flex min-h-11 items-center[^\"]*text-sm/g) ?? []).length, 3);
 });
+
+test("premium visual system exposes reusable electric-blue surfaces and motion", async () => {
+  const css = await source("app/globals.css");
+
+  assert.match(css, /--electric-blue:/);
+  assert.match(css, /--electric-cyan:/);
+  assert.match(css, /--panel-highlight:/);
+  assert.match(css, /\[data-theme="dark"\][\s\S]*--electric-blue:/);
+  assert.match(css, /\.premium-panel\s*\{/);
+  assert.match(css, /\.premium-card\s*\{/);
+  assert.match(css, /\.premium-button\s*\{/);
+  assert.match(css, /\.premium-eyebrow\s*\{/);
+  assert.match(css, /\.ambient-orb\s*\{/);
+  assert.match(css, /width:\s*min\(calc\(100% - 2rem\), 90rem\)/);
+  assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+});
