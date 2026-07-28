@@ -184,3 +184,14 @@ test("rendered newsletter success announces the no-address-sent result", async (
   assert.match(markup, /aria-atomic="true"/);
   assert.match(markup, /no address has been sent/);
 });
+
+test("rendered newsletter dialog uses the premium console treatment", async () => {
+  const markup = await renderNewsletterContent({
+    ...initialNewsletterState,
+    open: true,
+  });
+
+  assert.match(markup, /premium-panel/);
+  assert.match(markup, /premium-button/);
+  assert.match(markup, /icon-glow/);
+});

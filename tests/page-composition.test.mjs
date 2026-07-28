@@ -147,3 +147,11 @@ test("every marketing section uses the premium visual language", async () => {
     assert.match(section, /premium-(?:panel|card|button|eyebrow)/);
   }
 });
+
+test("footer completes the premium console experience", async () => {
+  const footer = await source("app/components/layout/footer.tsx");
+
+  assert.match(footer, /data-premium-footer/);
+  assert.match(footer, /premium-panel/);
+  assert.match(footer, /icon-glow/);
+});

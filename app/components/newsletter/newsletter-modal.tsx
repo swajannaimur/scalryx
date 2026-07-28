@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckCircle2, Mail } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { FormEventHandler, Ref } from "react";
 import { createPortal } from "react-dom";
@@ -49,22 +50,27 @@ export function NewsletterModalContent({
       aria-describedby="newsletter-description"
       aria-labelledby="newsletter-title"
       aria-modal="true"
-      className="modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl border border-line bg-surface-raised p-6 shadow-[0_20px_50px_var(--shadow)]"
+      className="premium-panel modal-dialog section-grid max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-[1.75rem] p-5 sm:p-7"
       ref={dialogRef}
       role="dialog"
     >
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-semibold text-content" id="newsletter-title">
+      <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
+        <div className="flex gap-4">
+          <span className="icon-glow flex size-11 shrink-0 items-center justify-center rounded-xl">
+            <Mail aria-hidden="true" size={20} />
+          </span>
+          <div>
+          <h2 className="text-xl font-bold tracking-tight text-content" id="newsletter-title">
             Join the Scalryx newsletter
           </h2>
           <p className="mt-2 text-sm leading-6 text-muted" id="newsletter-description">
             Get practical business insights, useful software recommendations, and curated opportunities—without the noise.
           </p>
+          </div>
         </div>
         <button
           aria-label="Close newsletter dialog"
-          className="grid size-11 shrink-0 place-items-center rounded-lg border border-line bg-input text-xl text-content transition hover:border-blue-400/70 hover:bg-blue-500/5"
+          className="premium-card grid size-11 shrink-0 place-items-center rounded-xl text-content"
           onClick={onClose}
           ref={closeButtonRef}
           type="button"
@@ -77,10 +83,13 @@ export function NewsletterModalContent({
         <div
           aria-atomic="true"
           aria-live="polite"
-          className="mt-6 rounded-xl border border-blue-400/30 bg-blue-500/10 p-4"
+          className="premium-card mt-6 rounded-2xl border-blue-400/35 bg-blue-500/10 p-5"
           role="status"
         >
-          <p className="text-sm font-semibold text-content">You are all set for the preview.</p>
+          <span className="icon-glow mb-4 flex size-11 items-center justify-center rounded-xl text-[var(--success)]">
+            <CheckCircle2 aria-hidden="true" size={21} />
+          </span>
+          <p className="text-base font-bold text-content">You are all set for the preview.</p>
           <p className="mt-2 text-sm leading-6 text-muted">{state.message}</p>
           <p className="mt-2 text-xs leading-5 text-muted">
             Live newsletter delivery will begin after a provider is connected.
@@ -99,7 +108,7 @@ export function NewsletterModalContent({
             }
             aria-invalid={Boolean(state.error)}
             autoComplete="email"
-            className="mt-2 min-h-11 w-full rounded-lg border border-line bg-input px-3 text-sm text-content placeholder:text-subtle"
+            className="premium-card mt-2 min-h-12 w-full rounded-xl px-3 text-sm text-content placeholder:text-subtle"
             disabled={isSubmitting}
             id="newsletter-email"
             name="email"
@@ -119,7 +128,7 @@ export function NewsletterModalContent({
             </p>
           ) : null}
           <button
-            className="mt-4 min-h-11 w-full rounded-lg bg-[var(--assessment-accent-bg)] px-4 text-sm font-semibold text-on-brand transition hover:bg-[var(--assessment-accent-hover)] disabled:cursor-not-allowed disabled:opacity-70"
+            className="premium-button mt-5 min-h-12 w-full rounded-xl px-4 text-sm font-bold disabled:cursor-not-allowed disabled:opacity-70"
             disabled={isSubmitting}
             type="submit"
           >
@@ -248,7 +257,7 @@ export function NewsletterModal({
 
   return createPortal(
     <div
-      className="modal-backdrop fixed inset-0 z-[70] grid place-items-center overflow-y-auto bg-black/60 p-4"
+      className="modal-backdrop fixed inset-0 z-[70] grid place-items-center overflow-y-auto bg-[#01040c]/80 p-4 backdrop-blur-md"
       data-newsletter-dialog-root="true"
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
