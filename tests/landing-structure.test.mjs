@@ -38,21 +38,19 @@ test("header provides primary navigation and audit action", async () => {
   assert.match(header, /Start Free Audit/);
 });
 
-test("hero contains the approved headline and dashboard metrics", async () => {
+test("hero presents the approved assessment-first message", async () => {
   const hero = await readFile(
     new URL("../app/components/landing/hero-section.tsx", import.meta.url),
     "utf8",
   );
-  const dashboard = await readFile(
-    new URL("../app/components/mockups/dashboard.tsx", import.meta.url),
+  const assessment = await readFile(
+    new URL("../app/components/assessment/business-assessment.tsx", import.meta.url),
     "utf8",
   );
 
-  assert.match(hero, /Scale Your Business/);
-  assert.match(hero, /Wrong Software/);
-  assert.match(dashboard, /Overall Score/);
-  assert.match(dashboard, /\$180/);
-  assert.match(dashboard, /Top Recommendations/);
+  assert.match(hero, /Find the weak points slowing down your business/);
+  assert.match(hero, /BusinessAssessment/);
+  assert.match(assessment, /Business health assessment/);
 });
 
 test("feature and process sections preserve reference content", async () => {

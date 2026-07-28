@@ -1,75 +1,32 @@
-import Image from "next/image";
-import { Play, Star } from "lucide-react";
-import { ButtonLink } from "../ui/button-link";
 import { SectionShell } from "../layout/section-shell";
-import { DashboardMockup } from "../mockups/dashboard";
-
-const avatars = [1, 2, 3, 4, 5];
+import { BusinessAssessment } from "../assessment/business-assessment";
 
 export function HeroSection() {
   return (
-    <section className="relative pb-9 pt-12 sm:pt-16 lg:pb-12 lg:pt-20">
-      <div className="pointer-events-none absolute left-1/2 top-8 h-72 w-[46rem] -translate-x-1/2 bg-blue-600/[.07] blur-[90px]" />
-      <SectionShell className="relative grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 xl:gap-20">
-        <div className="animate-enter min-w-0 max-w-[34rem]">
-          <h1 className="text-[40px] font-semibold leading-[1.08] text-content sm:text-[56px] xl:text-[64px]">
-            Scale Your Business Without Wasting Money on the{" "}
-            <span className="text-gradient">Wrong Software</span>
+    <section id="home">
+      <SectionShell className="grid min-w-0 gap-10 py-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-start xl:gap-16">
+        <div className="min-w-0 pt-2 lg:pt-8">
+          <p className="text-sm font-semibold text-blue-500">Business clarity, without the guesswork</p>
+          <h1 className="mt-4 max-w-xl text-[40px] font-semibold leading-[1.08] tracking-tight text-content sm:text-[52px] xl:text-[60px]">
+            Find the weak points slowing down your business.
           </h1>
-          <p className="mt-6 max-w-[31rem] text-base leading-7 text-muted">
-            AI-powered SaaS Stack Audits that analyze your software, find
-            bottlenecks, and recommend smarter tools - so you can save money and
-            grow faster.
+          <p className="mt-6 max-w-[33rem] text-base leading-7 text-muted">
+            Take a private, five-minute health assessment built for your business model. Get a clear score, practical next steps, and tools worth considering.
           </p>
-
-          <div className="mt-7 flex flex-col gap-3 min-[430px]:flex-row">
-            <ButtonLink className="min-w-40" href="#audit">
-              Start Free Audit
-            </ButtonLink>
-            <ButtonLink className="min-w-36" href="#solutions" variant="secondary">
-              <Play aria-hidden="true" size={13} />
-              Watch Demo
-            </ButtonLink>
-          </div>
-
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <div className="flex -space-x-2">
-              {avatars.map((avatar) => (
-                <Image
-                  alt=""
-                  className="size-8 rounded-full border-2 border-[var(--avatar-ring)]"
-                  height={40}
-                  key={avatar}
-                  src={`/avatars/avatar-${avatar}.svg`}
-                  width={40}
-                />
-              ))}
-            </div>
-            <div>
-              <div className="flex gap-0.5 text-amber-400">
-                {avatars.map((star) => (
-                  <Star
-                    aria-hidden="true"
-                    fill="currentColor"
-                    key={star}
-                    size={11}
-                    strokeWidth={1}
-                  />
-                ))}
-              </div>
-              <p className="mt-1 text-sm text-subtle">
-                Trusted by 1,000+ businesses worldwide
-              </p>
-            </div>
-          </div>
+          <ul className="mt-8 grid gap-3 text-sm text-muted">
+            {[
+              "Private by default",
+              "No account required",
+              "Actionable results",
+            ].map((point) => (
+              <li className="flex items-center gap-3" key={point}>
+                <span aria-hidden="true" className="flex size-6 items-center justify-center rounded-full bg-blue-500/15 text-xs font-bold text-blue-500">✓</span>
+                {point}
+              </li>
+            ))}
+          </ul>
         </div>
-
-        <div className="animate-enter-delay relative min-w-0">
-          <div className="absolute -inset-x-8 bottom-0 h-16 bg-blue-600/30 blur-3xl" />
-          <div className="animate-float relative">
-            <DashboardMockup />
-          </div>
-        </div>
+        <BusinessAssessment />
       </SectionShell>
     </section>
   );

@@ -6,6 +6,24 @@ import {
   firstMissingQuestionIndex,
   initialAssessmentState,
 } from "../app/assessment/state.ts";
+import { questionBanks } from "../app/assessment/questions.ts";
+
+function answerEveryQuestion(type) {
+  let state = assessmentReducer(initialAssessmentState, {
+    type: "select-business",
+    businessType: type,
+  });
+
+  for (const question of questionBanks[type].questions) {
+    state = assessmentReducer(state, {
+      type: "answer",
+      questionId: question.id,
+      optionId: question.options[0].id,
+    });
+  }
+
+  return state;
+}
 
 test("selecting a business enters its first question", () => {
   const state = assessmentReducer(initialAssessmentState, {
@@ -130,6 +148,37 @@ test("complete opens results only after every question has a valid answer", () =
   assert.equal(complete.view, "results");
   assert.equal(complete.error, "");
   assert.equal(firstMissingQuestionIndex(complete), -1);
+});
+
+test("the tenth answered question completes into results", () => {
+  const complete = assessmentReducer(answerEveryQuestion("ecommerce"), {
+    type: "complete",
+  });
+
+  assert.equal(complete.view, "results");
+  assert.equal(complete.error, "");
+});
+
+test("completion returns to the first missing question", () => {
+  let state = assessmentReducer(initialAssessmentState, {
+    type: "select-business",
+    businessType: "service",
+  });
+  const questions = questionBanks.service.questions;
+
+  for (const [index, question] of questions.entries()) {
+    if (index === 3) continue;
+    state = assessmentReducer(state, {
+      type: "answer",
+      questionId: question.id,
+      optionId: question.options[0].id,
+    });
+  }
+
+  const incomplete = assessmentReducer(state, { type: "complete" });
+  assert.equal(incomplete.view, "questions");
+  assert.equal(incomplete.questionIndex, 3);
+  assert.equal(incomplete.error, "Answer this question to see your result.");
 });
 
 test("complete focuses the first missing question without escaping bank bounds", () => {
