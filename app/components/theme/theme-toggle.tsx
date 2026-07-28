@@ -43,7 +43,7 @@ export function ThemeToggle() {
   return (
     <button
       aria-label={label}
-      className="inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-line-strong bg-surface text-content shadow-sm transition hover:border-blue-500 hover:text-blue-500"
+      className="inline-flex size-11 shrink-0 items-center justify-center rounded-md border border-line-strong bg-surface text-content shadow-sm transition hover:border-blue-500 hover:text-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
       onClick={() => {
         applyPersistedTheme(nextTheme);
         window.dispatchEvent(new Event(themeChangeEvent));
