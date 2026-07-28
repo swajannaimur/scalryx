@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { navItems } from "../../data/landing";
 import { Logo } from "../brand/logo";
+import { ThemeToggle } from "../theme/theme-toggle";
 import { ButtonLink } from "../ui/button-link";
 import { MobileMenu } from "./mobile-menu";
 import { SectionShell } from "./section-shell";
@@ -45,14 +46,16 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          <ButtonLink href="#about" variant="secondary">
-            Log In
-          </ButtonLink>
-          <ButtonLink href="#audit">Start Free Audit</ButtonLink>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeToggle />
+          <div className="hidden items-center gap-3 lg:flex">
+            <ButtonLink href="#about" variant="secondary">
+              Log In
+            </ButtonLink>
+            <ButtonLink href="#audit">Start Free Audit</ButtonLink>
+          </div>
+          <MobileMenu />
         </div>
-
-        <MobileMenu />
       </SectionShell>
     </header>
   );

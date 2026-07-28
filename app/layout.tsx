@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { createThemeInitializerScript } from "./components/theme/theme-state";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -7,13 +8,22 @@ export const metadata: Metadata = {
     "AI-powered SaaS stack audits that find bottlenecks, cut software waste, and reveal smarter tools.",
 };
 
+const themeInitializer = createThemeInitializerScript();
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
+    <html
+      className="h-full antialiased"
+      lang="en"
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitializer }} />
+      </head>
       <body className="min-h-full">{children}</body>
     </html>
   );
