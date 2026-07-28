@@ -66,10 +66,10 @@ export function DashboardMockup({ compact = false }: DashboardMockupProps) {
         </aside>
 
         <section className="min-w-0">
-          <div className="grid grid-cols-2 gap-3">
+          <div className={`grid gap-3 ${compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2"}`}>
             <div className="rounded-md border border-line bg-surface-raised p-4">
               <p className="text-sm text-muted">Overall Score</p>
-              <div className="mt-2 flex items-end justify-between gap-2">
+              <div className="mt-2 flex flex-wrap items-end justify-between gap-2">
                 <strong className="text-[32px] font-semibold text-content">
                   72
                   <span className="text-sm font-normal text-muted">
@@ -104,7 +104,7 @@ export function DashboardMockup({ compact = false }: DashboardMockupProps) {
             </div>
           </div>
 
-          <div className="mt-3 grid grid-cols-3 gap-3">
+          <div className={`mt-3 grid gap-3 ${compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-3"}`}>
             {[
               ["Problems Found", "3"],
               ["Opportunities", "5"],
@@ -123,13 +123,13 @@ export function DashboardMockup({ compact = false }: DashboardMockupProps) {
           </div>
 
           <div className="mt-3 rounded-md border border-line bg-surface-raised p-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-medium text-content">
                 Top Recommendations
               </p>
               <span className="text-xs text-blue-500">View All</span>
             </div>
-            <div className="mt-3 grid grid-cols-4 gap-3">
+            <div className={`mt-3 grid gap-3 ${compact ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-4"}`}>
               {recommendations.map((tool) => (
                 <div className="min-w-0 text-center" key={tool.name}>
                   <span
@@ -137,7 +137,7 @@ export function DashboardMockup({ compact = false }: DashboardMockupProps) {
                   >
                     {tool.mark}
                   </span>
-                  <span className="mt-1 block truncate text-xs text-muted">
+                  <span className="mt-1 block break-words whitespace-normal text-xs text-muted">
                     {tool.name}
                   </span>
                 </div>
