@@ -28,8 +28,7 @@ export interface PriorityRisk {
 export interface AssessmentResult {
   businessType: BusinessType;
   score: number;
-  label: "Critical" | "Needs attention" | "Healthy" | "Strong";
-  contextAnswer: string;
+  label: "Loss" | "Average" | "Profit";
   categories: readonly CategoryScore[];
   strengths: readonly CategoryScore[];
   risks: readonly PriorityRisk[];
@@ -42,11 +41,12 @@ interface ResolvedAnswer {
   option: AssessmentQuestion["options"][number];
 }
 
-export function getHealthLabel(score: number): AssessmentResult["label"] {
-  if (score < 40) return "Critical";
-  if (score < 60) return "Needs attention";
-  if (score < 80) return "Healthy";
-  return "Strong";
+export function getOperatingStatus(
+  profitabilityScore: number,
+): AssessmentResult["label"] {
+  if (profitabilityScore <= 1) return "Loss";
+  if (profitabilityScore === 2) return "Average";
+  return "Profit";
 }
 
 export function scoreAssessment(
@@ -62,21 +62,16 @@ export function scoreAssessment(
 
     return { question, option };
   });
-  const health = resolved.slice(1);
-  const rawScore = health.reduce(
-    (total, item) => total + (item.option.score ?? 0),
-    0,
-  );
-  const score = Math.round((rawScore / 36) * 100);
+  const maximumScore = resolved.length * 4;
+  const rawScore = resolved.reduce((total, item) => total + item.option.score, 0);
+  const score = Math.round((rawScore / maximumScore) * 100);
+  const label = getOperatingStatus(resolved[0].option.score);
   const categoryOrder = [
-    ...new Set(health.map((item) => item.question.category)),
+    ...new Set(resolved.map((item) => item.question.category)),
   ];
   const categories = categoryOrder.map((category) => {
-    const items = health.filter((item) => item.question.category === category);
-    const points = items.reduce(
-      (total, item) => total + (item.option.score ?? 0),
-      0,
-    );
+    const items = resolved.filter((item) => item.question.category === category);
+    const points = items.reduce((total, item) => total + item.option.score, 0);
 
     return {
       category,
@@ -88,14 +83,14 @@ export function scoreAssessment(
     .sort((a, b) => b.score - a.score || a.index - b.index)
     .slice(0, 2)
     .map((item) => ({ category: item.category, score: item.score }));
-  const risks = health
+  const risks = resolved
     .map((item, index) => ({
       questionId: item.question.id,
       category: item.question.category,
       title: item.question.title,
       explanation: item.question.risk,
       nextStep: item.question.nextStep,
-      score: item.option.score ?? 0,
+      score: item.option.score,
       index,
     }))
     .sort((a, b) => a.score - b.score || a.index - b.index)
@@ -112,8 +107,7 @@ export function scoreAssessment(
   return {
     businessType: type,
     score,
-    label: getHealthLabel(score),
-    contextAnswer: resolved[0].option.label,
+    label,
     categories,
     strengths,
     risks,

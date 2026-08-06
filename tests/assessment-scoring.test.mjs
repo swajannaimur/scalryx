@@ -2,49 +2,46 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { questionBanks } from "../app/assessment/questions.ts";
 import {
-  getHealthLabel,
+  getOperatingStatus,
   scoreAssessment,
 } from "../app/assessment/scoring.ts";
 import { getRecommendations } from "../app/assessment/recommendations.ts";
 import { getStrengthsPresentation } from "../app/assessment/result-presentation.ts";
 
-function answersAt(type, healthOptionIndex, revenueOptionIndex = 0) {
+function answersAt(type, optionIndex) {
   return Object.fromEntries(
-    questionBanks[type].questions.map((question, index) => [
+    questionBanks[type].questions.map((question) => [
       question.id,
-      question.options[index === 0 ? revenueOptionIndex : healthOptionIndex].id,
+      question.options[optionIndex].id,
     ]),
   );
 }
 
-test("business size context does not change an otherwise identical score", () => {
-  assert.equal(
-    scoreAssessment("ecommerce", answersAt("ecommerce", 2, 0)).score,
-    scoreAssessment("ecommerce", answersAt("ecommerce", 2, 4)).score,
-  );
+test("operating status maps profitability scores to the approved labels", () => {
+  assert.equal(getOperatingStatus(0), "Loss");
+  assert.equal(getOperatingStatus(1), "Loss");
+  assert.equal(getOperatingStatus(2), "Average");
+  assert.equal(getOperatingStatus(3), "Profit");
+  assert.equal(getOperatingStatus(4), "Profit");
 });
 
-test("health answers normalize exactly to the approved boundaries", () => {
-  assert.equal(scoreAssessment("saas", answersAt("saas", 0)).score, 0);
-  assert.equal(scoreAssessment("saas", answersAt("saas", 1)).score, 25);
-  assert.equal(scoreAssessment("saas", answersAt("saas", 2)).score, 50);
-  assert.equal(scoreAssessment("saas", answersAt("saas", 3)).score, 75);
+test("three scored answers normalize exactly to the approved boundaries", () => {
+  assert.equal(scoreAssessment("ecommerce", answersAt("ecommerce", 0)).score, 0);
+  assert.equal(scoreAssessment("agency", answersAt("agency", 2)).score, 50);
   assert.equal(scoreAssessment("saas", answersAt("saas", 4)).score, 100);
 });
 
-test("score labels use the approved inclusive ranges", () => {
-  const cases = [
-    [39, "Critical"],
-    [40, "Needs attention"],
-    [59, "Needs attention"],
-    [60, "Healthy"],
-    [79, "Healthy"],
-    [80, "Strong"],
-  ];
+test("status comes from the profitability answer rather than the blended score", () => {
+  const lossWithStrongSignals = {
+    ...answersAt("ecommerce", 4),
+    [questionBanks.ecommerce.questions[0].id]:
+      questionBanks.ecommerce.questions[0].options[0].id,
+  };
+  const result = scoreAssessment("ecommerce", lossWithStrongSignals);
 
-  for (const [score, label] of cases) {
-    assert.equal(getHealthLabel(score), label);
-  }
+  assert.equal(result.label, "Loss");
+  assert.equal(result.score, 67);
+  assert.equal("contextAnswer" in result, false);
 });
 
 test("weak categories select stable unique vendors", () => {
@@ -114,7 +111,7 @@ test("all-healthy top categories retain the strongest-areas presentation", () =>
 test("incomplete answers are rejected instead of producing a partial score", () => {
   assert.throws(
     () => scoreAssessment("service", {}),
-    /Missing answer for service-revenue/,
+    /Missing answer for service-net-margin/,
   );
 });
 
@@ -126,11 +123,6 @@ test("category, strength, risk, and next-step ordering remains stable on ties", 
     [
       ["profitability", 50],
       ["growth", 50],
-      ["retention", 50],
-      ["conversion", 50],
-      ["inventory", 50],
-      ["acquisition", 50],
-      ["operations", 50],
       ["cash", 50],
     ],
   );
@@ -141,9 +133,9 @@ test("category, strength, risk, and next-step ordering remains stable on ties", 
   assert.deepEqual(
     result.risks.map((item) => item.questionId),
     [
-      "ecommerce-gross-margin",
       "ecommerce-net-margin",
       "ecommerce-revenue-trend",
+      "ecommerce-cash-runway",
     ],
   );
   assert.deepEqual(
@@ -156,7 +148,7 @@ test("scoring leaves a frozen caller-owned answer record untouched", () => {
   const answers = Object.freeze(answersAt("service", 3));
 
   assert.equal(scoreAssessment("service", answers).score, 75);
-  assert.equal(answers["service-revenue"], "revenue-under-5k");
+  assert.equal(answers["service-net-margin"], "service-net-margin-3");
 });
 
 test("recommendation mappings cover every business type in stable order", () => {

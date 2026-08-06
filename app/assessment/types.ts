@@ -23,7 +23,7 @@ export type QuestionCategory =
 export interface AnswerOption {
   id: string;
   label: string;
-  score: 0 | 1 | 2 | 3 | 4 | null;
+  score: 0 | 1 | 2 | 3 | 4;
 }
 
 export interface AssessmentQuestion {
@@ -32,7 +32,6 @@ export interface AssessmentQuestion {
   category: QuestionCategory;
   title: string;
   guidance: string;
-  contextOnly: boolean;
   options: readonly AnswerOption[];
   risk: string;
   nextStep: string;
