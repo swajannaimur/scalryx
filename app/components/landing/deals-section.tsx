@@ -1,31 +1,51 @@
+import { ArrowUpRight } from "lucide-react";
 import { deals } from "../../data/site-content";
 import { SectionShell } from "../layout/section-shell";
-import { ArrowUpRight } from "lucide-react";
 
 export function DealsSection() {
   return (
-    <section aria-labelledby="deals-heading" className="py-16 sm:py-24" data-premium-section id="deals">
+    <section
+      aria-labelledby="deals-heading"
+      className="py-16 sm:py-24"
+      data-editorial-section
+      id="deals"
+    >
       <SectionShell>
-        <div className="max-w-3xl">
-          <p className="premium-eyebrow">Curated SaaS deals</p>
-          <h2 className="mt-5 text-3xl font-bold tracking-[-0.035em] text-content sm:text-5xl" id="deals-heading">Tools worth a closer look.</h2>
-          <p className="mt-4 text-base leading-8 text-muted">
-            A compact shortlist matched to the business models in the assessment.
+        <div className="grid gap-6 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
+          <div>
+            <p className="section-label">Curated SaaS tools</p>
+            <h2 className="mt-5 text-3xl font-bold tracking-[-0.04em] text-content sm:text-5xl" id="deals-heading">
+              A short list, chosen with a reason.
+            </h2>
+          </div>
+          <p className="max-w-xl text-base leading-8 text-muted lg:justify-self-end">
+            Practical software matched to the four operating models in the assessment. No invented savings or inflated claims.
           </p>
         </div>
+
         <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {deals.map((deal) => (
-            <a className="premium-card group flex min-h-64 flex-col rounded-2xl p-5" href={deal.href} key={deal.title} rel="noopener noreferrer" target="_blank">
-              <div className="flex items-center justify-between">
-                <span className="icon-glow flex size-11 items-center justify-center rounded-xl text-sm font-black">
+            <a
+              className="editorial-card group flex min-h-72 flex-col rounded-2xl p-5"
+              href={deal.href}
+              key={deal.title}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <span className="icon-tile flex size-11 items-center justify-center rounded-xl text-sm font-black">
                   {deal.title.slice(0, 2).toUpperCase()}
                 </span>
-                <ArrowUpRight aria-hidden="true" className="text-subtle transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--electric-cyan)]" size={19} />
+                <span className="rounded-full bg-[var(--canvas-soft)] px-3 py-1.5 text-xs font-bold text-muted">
+                  {deal.audience}
+                </span>
               </div>
-              <span className="mt-5 text-sm font-bold uppercase tracking-[0.1em] text-[var(--assessment-accent-text)]">For {deal.audience}</span>
-              <h3 className="mt-2 text-2xl font-bold text-content">{deal.title}</h3>
-              <p className="mt-3 text-base leading-7 text-muted">{deal.description}</p>
-              <span className="mt-auto border-t border-line pt-5 text-sm font-bold text-content">{deal.offer}</span>
+              <h3 className="mt-7 text-2xl font-bold tracking-[-0.03em] text-content">{deal.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-muted">{deal.description}</p>
+              <span className="mt-auto flex items-center justify-between gap-3 border-t border-line pt-5 text-sm font-bold text-[var(--brand-navy)]">
+                {deal.offer}
+                <ArrowUpRight aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={17} />
+              </span>
             </a>
           ))}
         </div>

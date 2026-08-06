@@ -50,13 +50,13 @@ export function NewsletterModalContent({
       aria-describedby="newsletter-description"
       aria-labelledby="newsletter-title"
       aria-modal="true"
-      className="premium-panel modal-dialog section-grid max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-[1.75rem] p-5 sm:p-7"
+      className="editorial-panel modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-[1.75rem] p-5 sm:p-7"
       ref={dialogRef}
       role="dialog"
     >
       <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
         <div className="flex gap-4">
-          <span className="icon-glow flex size-11 shrink-0 items-center justify-center rounded-xl">
+          <span className="icon-tile flex size-11 shrink-0 items-center justify-center rounded-xl">
             <Mail aria-hidden="true" size={20} />
           </span>
           <div>
@@ -70,7 +70,7 @@ export function NewsletterModalContent({
         </div>
         <button
           aria-label="Close newsletter dialog"
-          className="premium-card grid size-11 shrink-0 place-items-center rounded-xl text-content"
+          className="secondary-button grid size-11 shrink-0 place-items-center rounded-xl text-content"
           onClick={onClose}
           ref={closeButtonRef}
           type="button"
@@ -83,10 +83,10 @@ export function NewsletterModalContent({
         <div
           aria-atomic="true"
           aria-live="polite"
-          className="premium-card mt-6 rounded-2xl border-blue-400/35 bg-blue-500/10 p-5"
+          className="editorial-card mt-6 rounded-2xl bg-[var(--brand-soft)] p-5"
           role="status"
         >
-          <span className="icon-glow mb-4 flex size-11 items-center justify-center rounded-xl text-[var(--success)]">
+          <span className="icon-tile mb-4 flex size-11 items-center justify-center rounded-xl text-[var(--success)]">
             <CheckCircle2 aria-hidden="true" size={21} />
           </span>
           <p className="text-base font-bold text-content">You are all set for the preview.</p>
@@ -108,7 +108,7 @@ export function NewsletterModalContent({
             }
             aria-invalid={Boolean(state.error)}
             autoComplete="email"
-            className="premium-card mt-2 min-h-12 w-full rounded-xl px-3 text-sm text-content placeholder:text-subtle"
+            className="mt-2 min-h-12 w-full rounded-xl border border-line bg-white px-3 text-sm text-content outline-none transition placeholder:text-subtle focus:border-[var(--brand-navy)] focus:ring-4 focus:ring-[var(--focus-ring)]"
             disabled={isSubmitting}
             id="newsletter-email"
             name="email"
@@ -123,12 +123,12 @@ export function NewsletterModalContent({
             No spam. Unsubscribe whenever you want.
           </p>
           {state.error ? (
-            <p className="mt-2 text-sm text-[var(--assessment-danger)]" id="newsletter-email-error" role="alert">
+            <p className="mt-2 text-sm text-[var(--danger)]" id="newsletter-email-error" role="alert">
               {state.error}
             </p>
           ) : null}
           <button
-            className="premium-button mt-5 min-h-12 w-full rounded-xl px-4 text-sm font-bold disabled:cursor-not-allowed disabled:opacity-70"
+            className="primary-button mt-5 min-h-12 w-full rounded-xl px-4 text-sm font-bold disabled:cursor-not-allowed disabled:opacity-70"
             disabled={isSubmitting}
             type="submit"
           >
@@ -257,7 +257,7 @@ export function NewsletterModal({
 
   return createPortal(
     <div
-      className="modal-backdrop fixed inset-0 z-[70] grid place-items-center overflow-y-auto bg-[#01040c]/80 p-4 backdrop-blur-md"
+      className="modal-backdrop fixed inset-0 z-[70] grid place-items-center overflow-y-auto bg-slate-950/35 p-4"
       data-newsletter-dialog-root="true"
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose();
