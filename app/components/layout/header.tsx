@@ -18,7 +18,7 @@ export function Header() {
 
         <nav
           aria-label="Primary navigation"
-          className="hidden items-center justify-self-center gap-1 lg:flex"
+          className="col-start-2 hidden items-center justify-self-center gap-1 lg:flex"
         >
           {navItems.map((item) => (
             <a
@@ -31,7 +31,7 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+        <div className="col-start-3 flex shrink-0 items-center gap-2 sm:gap-3">
           <NewsletterTrigger className="primary-button hidden min-h-11 items-center justify-center rounded-xl px-4 text-sm font-bold sm:inline-flex">
             Join newsletter
           </NewsletterTrigger>

@@ -70,11 +70,11 @@ test("header and mobile navigation offer only the approved anchor navigation", a
   assert.match(header, /<Logo className="w-28 sm:w-32" preload \/>/);
   assert.match(
     header,
-    /className="hidden items-center justify-self-center gap-1 lg:flex"/,
+    /className="col-start-2 hidden items-center justify-self-center gap-1 lg:flex"/,
   );
   assert.match(
     header,
-    /className="flex shrink-0 items-center gap-2 sm:gap-3"/,
+    /className="col-start-3 flex shrink-0 items-center gap-2 sm:gap-3"/,
   );
   assert.match(
     header,
