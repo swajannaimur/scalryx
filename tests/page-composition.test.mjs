@@ -61,6 +61,23 @@ test("header and mobile navigation offer only the approved anchor navigation", a
   assert.match(header, /navItems\.map/);
   assert.match(
     header,
+    /grid h-\[72px\] grid-cols-\[auto_minmax\(0,1fr\)_auto\] items-center/,
+  );
+  assert.match(
+    header,
+    /className="inline-flex min-h-11 shrink-0 items-center"/,
+  );
+  assert.match(header, /<Logo className="w-28 sm:w-32" preload \/>/);
+  assert.match(
+    header,
+    /className="hidden items-center justify-self-center gap-1 lg:flex"/,
+  );
+  assert.match(
+    header,
+    /className="flex shrink-0 items-center gap-2 sm:gap-3"/,
+  );
+  assert.match(
+    header,
     /className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm/,
   );
   assert.doesNotMatch(header, /Log In|Start Free Audit|ButtonLink|ChevronDown/);
@@ -97,6 +114,8 @@ test("footer includes internal legal links and the affiliate disclosure copy", a
     footer,
     /Scalryx may earn a commission from qualifying purchases made through some links, at no extra cost to you\./,
   );
+  assert.match(footer, /<Logo className="w-\[140px\]" \/>/);
+  assert.doesNotMatch(footer, /<Logo[^>]*preload/);
 });
 
 test("every primary navigation anchor has a destination in the composed page", async () => {
@@ -124,7 +143,10 @@ test("task 7 header and footer controls meet the 44px touch-target standard", as
     announcement,
     /<NewsletterTrigger className="inline-flex min-h-11 items-center[^"`]*text-sm/,
   );
-  assert.match(header, /aria-label="Scalryx home"[^>]*className="inline-flex min-h-11 items-center/);
+  assert.match(
+    header,
+    /aria-label="Scalryx home"[^>]*className="inline-flex min-h-11 shrink-0 items-center/,
+  );
   assert.equal((footer.match(/inline-flex min-h-11 items-center[^\"]*text-sm/g) ?? []).length, 3);
 });
 

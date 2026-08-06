@@ -12,7 +12,7 @@ export function Footer() {
     >
       <SectionShell className="grid gap-12 md:grid-cols-[1.1fr_2fr]" id="about">
         <div className="min-w-0">
-          <Logo />
+          <Logo className="w-[140px]" />
           <p className="mt-5 max-w-[22rem] text-sm leading-7 text-muted">
             Independent business-health guidance and practical software
             recommendations for founders and operating leaders.
