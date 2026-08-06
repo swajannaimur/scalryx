@@ -185,13 +185,13 @@ test("rendered newsletter success announces the no-address-sent result", async (
   assert.match(markup, /no address has been sent/);
 });
 
-test("rendered newsletter dialog uses the premium console treatment", async () => {
+test("rendered newsletter dialog uses the light editorial treatment", async () => {
   const markup = await renderNewsletterContent({
     ...initialNewsletterState,
     open: true,
   });
 
-  assert.match(markup, /premium-panel/);
-  assert.match(markup, /premium-button/);
-  assert.match(markup, /icon-glow/);
+  assert.match(markup, /editorial-panel/);
+  assert.match(markup, /primary-button/);
+  assert.match(markup, /icon-tile/);
 });

@@ -44,12 +44,13 @@ test("header and mobile navigation offer only the approved anchor navigation", a
 
 test("hero content preserves the approved assessment-first promise", () => {
   assert.deepEqual(heroContent, {
-    eyebrow: "Business clarity, without the guesswork",
-    heading: "Find the weak points slowing down your business.",
-    body: "Take a private, five-minute health assessment built for your business model. Get a clear score, practical next steps, and tools worth considering.",
+    eyebrow: "Business health assessment",
+    heading: "Business clarity, without the guesswork",
+    body: "Complete a private five-minute business health assessment and get a clear score, practical priorities, and tools worth considering.",
     trustPoints: [
-      "Private by default",
+      "Five minutes",
       "No account required",
+      "Private assessment",
       "Actionable results",
     ],
   });
@@ -97,23 +98,22 @@ test("task 7 header and footer controls meet the 44px touch-target standard", as
   assert.equal((footer.match(/inline-flex min-h-11 items-center[^\"]*text-sm/g) ?? []).length, 3);
 });
 
-test("premium visual system exposes reusable electric-blue surfaces and motion", async () => {
+test("editorial visual system exposes reusable light surfaces and restrained motion", async () => {
   const css = await source("app/globals.css");
 
-  assert.match(css, /--electric-blue:/);
-  assert.match(css, /--electric-cyan:/);
-  assert.match(css, /--panel-highlight:/);
-  assert.match(css, /:root[\s\S]*--electric-blue:/);
-  assert.match(css, /\.premium-panel\s*\{/);
-  assert.match(css, /\.premium-card\s*\{/);
-  assert.match(css, /\.premium-button\s*\{/);
-  assert.match(css, /\.premium-eyebrow\s*\{/);
-  assert.match(css, /\.ambient-orb\s*\{/);
-  assert.match(css, /width:\s*min\(calc\(100% - 2rem\), 90rem\)/);
+  assert.match(css, /color-scheme:\s*light/);
+  assert.match(css, /--brand-navy:/);
+  assert.match(css, /--canvas-soft:/);
+  assert.match(css, /\.editorial-panel\s*\{/);
+  assert.match(css, /\.editorial-card\s*\{/);
+  assert.match(css, /\.primary-button\s*\{/);
+  assert.match(css, /\.section-label\s*\{/);
+  assert.match(css, /width:\s*min\(calc\(100% - 2rem\), 82rem\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.doesNotMatch(css, /--electric-|ambient-orb|scan-line|text-gradient|blue-glow/);
 });
 
-test("hero and assessment use the premium console composition", async () => {
+test("hero keeps the live assessment inside a clean editorial composition", async () => {
   const [hero, businessStep, questionStep, resultStep, header] = await Promise.all([
     source("app/components/landing/hero-section.tsx"),
     source("app/components/assessment/business-type-step.tsx"),
@@ -122,16 +122,18 @@ test("hero and assessment use the premium console composition", async () => {
     source("app/components/layout/header.tsx"),
   ]);
 
-  assert.match(hero, /data-premium-hero/);
-  assert.match(hero, /data-capability-strip/);
-  assert.match(hero, /data-assessment-console/);
-  assert.match(businessStep, /premium-panel/);
-  assert.match(questionStep, /premium-panel/);
-  assert.match(resultStep, /premium-panel/);
-  assert.match(header, /premium-header/);
+  assert.match(hero, /Business clarity, without the guesswork/);
+  assert.match(hero, /data-editorial-hero/);
+  assert.match(hero, /data-live-assessment/);
+  assert.doesNotMatch(hero, /data-capability-strip|ambient-orb|text-gradient/);
+  assert.match(businessStep, /data-business-model-selector/);
+  assert.match(businessStep, /editorial-panel/);
+  assert.match(questionStep, /editorial-panel/);
+  assert.match(resultStep, /editorial-panel/);
+  assert.match(header, /editorial-header/);
 });
 
-test("every marketing section uses the premium visual language", async () => {
+test("every marketing section uses the editorial visual language", async () => {
   const sections = await Promise.all([
     source("app/components/landing/audience-section.tsx"),
     source("app/components/landing/trust-section.tsx"),
@@ -142,20 +144,20 @@ test("every marketing section uses the premium visual language", async () => {
   ]);
 
   for (const section of sections) {
-    assert.match(section, /data-premium-section/);
-    assert.match(section, /premium-(?:panel|card|button|eyebrow)/);
+    assert.match(section, /data-editorial-section/);
+    assert.match(section, /editorial-(?:panel|card)|primary-button|section-label/);
   }
 });
 
-test("footer completes the premium console experience", async () => {
+test("footer completes the editorial experience without dead social controls", async () => {
   const footer = await source("app/components/layout/footer.tsx");
 
-  assert.match(footer, /data-premium-footer/);
-  assert.match(footer, /premium-panel/);
-  assert.match(footer, /icon-glow/);
+  assert.match(footer, /data-editorial-footer/);
+  assert.match(footer, /section-label/);
+  assert.doesNotMatch(footer, /const socials|Share2|href="#footer"/);
 });
 
-test("premium announcement can wrap safely on narrow screens", async () => {
+test("editorial announcement can wrap safely on narrow screens", async () => {
   const announcement = await source("app/components/layout/announcement-bar.tsx");
 
   assert.match(announcement, /flex min-h-11 flex-wrap items-center/);
@@ -177,7 +179,7 @@ test("assessment results omit the requested detailed analysis blocks", async () 
   assert.match(resultStep, /Restart assessment/);
 });
 
-test("site ships one permanent dark theme without a theme runtime", async () => {
+test("site ships one permanent light theme without a theme runtime", async () => {
   const [css, header, layout] = await Promise.all([
     source("app/globals.css"),
     source("app/components/layout/header.tsx"),
@@ -185,8 +187,8 @@ test("site ships one permanent dark theme without a theme runtime", async () => 
   ]);
   const rootTokens = css.match(/:root\s*\{([\s\S]*?)\n\}/)?.[1] ?? "";
 
-  assert.match(rootTokens, /color-scheme:\s*dark/);
-  assert.match(rootTokens, /--background:\s*#01050d/);
+  assert.match(rootTokens, /color-scheme:\s*light/);
+  assert.match(rootTokens, /--canvas:\s*#ffffff/);
   assert.doesNotMatch(css, /\[data-theme=/);
   assert.doesNotMatch(css, /prefers-color-scheme/);
   assert.doesNotMatch(header, /ThemeToggle|theme-toggle/);
