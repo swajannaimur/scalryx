@@ -153,24 +153,24 @@ export function BusinessAssessment() {
       {state.pendingBusinessType && typeof document !== "undefined"
         ? createPortal(
             <div
-              className="modal-backdrop fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-black/55 p-4"
+              className="modal-backdrop fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-slate-950/35 p-4"
               data-assessment-dialog-root="true"
             >
               <div
                 aria-describedby="change-business-description"
                 aria-labelledby="change-business-title"
                 aria-modal="true"
-                className="premium-panel modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl p-6"
+                className="editorial-panel modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-2xl p-6"
                 ref={dialogRef}
                 role="alertdialog"
               >
                 <h3 className="text-xl font-semibold text-content" id="change-business-title">Start a different assessment?</h3>
                 <p className="mt-2 text-sm leading-6 text-muted" id="change-business-description">Your current answers will be cleared.</p>
                 <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-                  <button className="premium-card min-h-11 rounded-xl px-4 text-sm font-semibold text-content" onClick={() => dispatch({ type: "cancel-business-change" })} type="button">
+                  <button className="secondary-button min-h-11 rounded-xl px-4 text-sm font-semibold" onClick={() => dispatch({ type: "cancel-business-change" })} type="button">
                     Keep my answers
                   </button>
-                  <button className="premium-button min-h-11 rounded-xl px-4 text-sm font-bold" onClick={() => dispatch({ type: "confirm-business-change" })} type="button">
+                  <button className="primary-button min-h-11 rounded-xl px-4 text-sm font-bold" onClick={() => dispatch({ type: "confirm-business-change" })} type="button">
                     Clear and continue
                   </button>
                 </div>

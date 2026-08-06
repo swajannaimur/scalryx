@@ -1,34 +1,41 @@
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  ChartNoAxesCombined,
+  Store,
+  Wrench,
+} from "lucide-react";
 import type { BusinessType } from "../../assessment/types";
 
 const businessChoices: readonly {
   readonly type: BusinessType;
-  readonly initials: string;
   readonly label: string;
   readonly description: string;
+  readonly icon: typeof Store;
 }[] = [
   {
     type: "ecommerce",
-    initials: "EC",
     label: "Ecommerce",
-    description: "Online stores selling physical or digital products.",
+    description: "Margins, conversion, inventory, retention, and cash health.",
+    icon: Store,
   },
   {
     type: "agency",
-    initials: "AG",
     label: "Agency",
-    description: "Creative, marketing, development, or consulting agencies.",
+    description: "Pipeline, delivery capacity, client mix, and recurring revenue.",
+    icon: BriefcaseBusiness,
   },
   {
     type: "saas",
-    initials: "SA",
     label: "SaaS",
-    description: "Subscription software companies with recurring revenue.",
+    description: "Growth quality, churn, activation, runway, and unit economics.",
+    icon: ChartNoAxesCombined,
   },
   {
     type: "service",
-    initials: "SB",
     label: "Service Business",
-    description: "Local and professional businesses delivering customer services.",
+    description: "Lead flow, capacity, collections, repeat work, and owner reliance.",
+    icon: Wrench,
   },
 ];
 
@@ -42,31 +49,37 @@ export function BusinessTypeStep({
   onSelect,
 }: BusinessTypeStepProps) {
   return (
-    <div className="premium-panel section-grid blue-glow rounded-[1.5rem] p-5 sm:p-6">
-      <div className="mb-5 flex items-center justify-between border-b border-line pb-4">
-        <p className="premium-eyebrow">Step 1 of 2</p>
-        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-subtle">
-          Choose a model
-        </span>
-      </div>
-      <fieldset className="mt-3">
-        <legend className="text-2xl font-bold tracking-tight text-content sm:text-[1.7rem]" data-assessment-focus tabIndex={-1}>
+    <div
+      className="editorial-panel rounded-[1.5rem] p-5 sm:p-7"
+      data-business-model-selector
+    >
+      <div className="border-b border-line pb-5">
+        <p className="section-label">Choose your model</p>
+        <h2
+          className="mt-4 text-2xl font-bold tracking-[-0.03em] text-content sm:text-[1.85rem]"
+          data-assessment-focus
+          tabIndex={-1}
+        >
           What type of business do you run?
-        </legend>
+        </h2>
         <p className="mt-2 text-sm leading-6 text-muted">
-          Your questions will adapt to your business model.
+          Your questions and recommendations adapt to how your business operates.
         </p>
+      </div>
 
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+      <fieldset className="mt-5">
+        <legend className="sr-only">Select your business model</legend>
+        <div className="grid gap-3 sm:grid-cols-2">
           {businessChoices.map((choice) => {
             const inputId = `business-type-${choice.type}`;
             const selected = selectedType === choice.type;
+            const Icon = choice.icon;
 
             return (
               <label
-                className={`premium-card group flex min-h-32 cursor-pointer items-center gap-3 rounded-2xl p-4 focus-within:border-[var(--assessment-accent-text)] focus-within:ring-2 focus-within:ring-[var(--assessment-focus-ring)] ${
+                className={`editorial-card group flex min-h-36 cursor-pointer flex-col rounded-2xl p-4 focus-within:ring-4 focus-within:ring-[var(--focus-ring)] ${
                   selected
-                    ? "border-[var(--assessment-accent-text)] bg-blue-500/15 shadow-[0_0_28px_var(--glow-soft)]"
+                    ? "border-[var(--brand-navy)] bg-[var(--brand-soft)]"
                     : ""
                 }`}
                 htmlFor={inputId}
@@ -81,25 +94,24 @@ export function BusinessTypeStep({
                   type="radio"
                   value={choice.type}
                 />
-                <span
-                  aria-hidden="true"
-                  className="icon-glow flex size-12 shrink-0 items-center justify-center rounded-xl text-xs font-extrabold"
-                >
-                  {choice.initials}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-base font-bold text-content">
-                    {choice.label}
+                <span className="flex items-start justify-between gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="icon-tile flex size-10 shrink-0 items-center justify-center rounded-xl"
+                  >
+                    <Icon size={18} strokeWidth={1.8} />
                   </span>
-                  <span className="mt-1 block text-sm leading-5 text-muted">
-                    {choice.description}
-                  </span>
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="mt-1 text-subtle transition-transform group-hover:translate-x-1 group-hover:text-[var(--brand-navy)]"
+                    size={17}
+                  />
                 </span>
-                <span
-                  aria-hidden="true"
-                  className="text-lg text-subtle transition group-hover:translate-x-1 group-hover:text-[var(--assessment-accent-text)]"
-                >
-                  →
+                <span className="mt-4 block text-base font-bold text-content">
+                  {choice.label}
+                </span>
+                <span className="mt-1 block text-sm leading-5 text-muted">
+                  {choice.description}
                 </span>
               </label>
             );

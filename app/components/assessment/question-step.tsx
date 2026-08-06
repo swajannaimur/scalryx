@@ -32,15 +32,15 @@ export function QuestionStep({
   const isFinalQuestion = questionNumber === 10;
 
   return (
-    <div className="premium-panel section-grid blue-glow rounded-[1.5rem] p-5 sm:p-6">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line pb-4">
+    <div className="editorial-panel rounded-[1.5rem] p-5 sm:p-7">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-5">
         <div>
-          <p className="text-sm font-bold text-[var(--assessment-accent-text)]">{assessmentTitle}</p>
+          <p className="text-sm font-bold text-[var(--brand-navy)]">{assessmentTitle}</p>
           <p aria-current="step" className="mt-1 text-sm text-muted">
             Question {questionNumber} of 10
           </p>
         </div>
-        <span className="rounded-full border border-line-strong bg-blue-500/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.1em] text-[var(--assessment-accent-text)]">
+        <span className="rounded-full border border-line bg-[var(--canvas-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-muted">
           {displayCategory(question.category)}
         </span>
       </div>
@@ -51,11 +51,11 @@ export function QuestionStep({
           aria-valuemax={10}
           aria-valuemin={1}
           aria-valuenow={questionNumber}
-          className="h-2.5 overflow-hidden rounded-full border border-line bg-[var(--score-track)] p-px"
+          className="h-2 overflow-hidden rounded-full bg-[var(--score-track)]"
           role="progressbar"
         >
           <div
-            className="assessment-progress-fill h-full rounded-full shadow-[0_0_14px_var(--electric-blue)] transition-[width] duration-500"
+            className="assessment-progress-fill h-full rounded-full transition-[width] duration-300"
             style={
               {
                 "--assessment-progress": `${questionNumber * 10}%`,
@@ -65,8 +65,13 @@ export function QuestionStep({
         </div>
       </div>
 
-      <fieldset className="mt-6">
-        <legend className="text-xl font-bold leading-snug tracking-tight text-content sm:text-[1.7rem]" data-assessment-focus id={headingId} tabIndex={-1}>
+      <fieldset className="mt-7">
+        <legend
+          className="text-xl font-bold leading-snug tracking-[-0.025em] text-content sm:text-[1.7rem]"
+          data-assessment-focus
+          id={headingId}
+          tabIndex={-1}
+        >
           {question.title}
         </legend>
         <p className="mt-2 text-sm leading-6 text-muted" id={guidanceId}>
@@ -76,11 +81,12 @@ export function QuestionStep({
           {question.options.map((option) => {
             const optionId = `${question.id}-${option.id}`;
             const selected = selectedOptionId === option.id;
+
             return (
               <label
-                className={`premium-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm ${
+                className={`editorial-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm ${
                   selected
-                    ? "border-[var(--assessment-accent-text)] bg-blue-500/15 text-content shadow-[0_0_22px_var(--glow-soft)]"
+                    ? "border-[var(--brand-navy)] bg-[var(--brand-soft)] text-content"
                     : "text-muted hover:text-content"
                 }`}
                 htmlFor={optionId}
@@ -89,7 +95,7 @@ export function QuestionStep({
                 <input
                   aria-describedby={error ? `${guidanceId} ${errorId}` : guidanceId}
                   checked={selected}
-                  className="size-4 accent-blue-500"
+                  className="size-4 accent-[var(--brand-navy)]"
                   id={optionId}
                   name={question.id}
                   onChange={() => onAnswer(question.id, option.id)}
@@ -104,21 +110,21 @@ export function QuestionStep({
       </fieldset>
 
       {error ? (
-        <p className="mt-3 text-sm font-medium text-[var(--assessment-danger)]" id={errorId} role="alert">
+        <p className="mt-3 text-sm font-semibold text-[var(--danger)]" id={errorId} role="alert">
           {error}
         </p>
       ) : null}
 
-      <div className="mt-6 flex flex-col-reverse gap-3 min-[430px]:flex-row min-[430px]:justify-between">
+      <div className="mt-7 flex flex-col-reverse gap-3 min-[430px]:flex-row min-[430px]:justify-between">
         <button
-          className="premium-card min-h-11 rounded-xl px-4 text-sm font-semibold text-content"
+          className="secondary-button min-h-11 rounded-xl px-4 text-sm font-semibold"
           onClick={onPrevious}
           type="button"
         >
           ← Previous
         </button>
         <button
-          className="premium-button min-h-11 rounded-xl px-5 text-sm font-bold"
+          className="primary-button min-h-11 rounded-xl px-5 text-sm font-bold"
           onClick={onNext}
           type="button"
         >
