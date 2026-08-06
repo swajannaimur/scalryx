@@ -1,18 +1,22 @@
+import Image from "next/image";
+import logoImage from "../../../public/logo.png";
+
 interface LogoProps {
-  compact?: boolean;
   className?: string;
+  preload?: boolean;
 }
 
-export function Logo({ compact = false, className = "" }: LogoProps) {
+export function Logo({
+  className = "w-[140px]",
+  preload = false,
+}: LogoProps) {
   return (
-    <span
-      className={`inline-flex items-center gap-2.5 font-semibold text-content ${className}`}
-    >
-      <span aria-hidden="true" className="relative block size-5">
-        <span className="absolute left-[9px] top-0 h-5 w-[3px] rotate-45 rounded-full bg-[var(--brand-primary)]" />
-        <span className="absolute left-[9px] top-0 h-5 w-[3px] -rotate-45 rounded-full bg-[var(--brand-accent)]" />
-      </span>
-      {!compact && <span className="text-lg font-bold tracking-[-0.02em]">Scalryx</span>}
-    </span>
+    <Image
+      alt="Scalryx"
+      className={`h-auto max-w-full ${className}`}
+      preload={preload}
+      sizes="(max-width: 639px) 112px, 140px"
+      src={logoImage}
+    />
   );
 }

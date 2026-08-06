@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { heroComposition, heroContent as heroContentData } from "../app/data/hero-content.ts";
 import { navItems } from "../app/data/site-content.ts";
 
 const source = (file) => readFile(new URL(`../${file}`, import.meta.url), "utf8");
+const binary = (file) => readFile(new URL(`../${file}`, import.meta.url));
 
 test("home composes the affiliate landing sections in the approved order", async () => {
   const page = await source("app/page.tsx");
@@ -24,6 +26,30 @@ test("home composes the affiliate landing sections in the approved order", async
   const positions = sections.map((section) => page.indexOf(`<${section}`));
   assert.equal(positions.every((position) => position >= 0), true);
   assert.equal(positions.every((position, index) => index === 0 || position > positions[index - 1]), true);
+});
+
+test("brand logo uses the exact supplied PNG with a stable Next Image contract", async () => {
+  const [logo, logoBytes] = await Promise.all([
+    source("app/components/brand/logo.tsx"),
+    binary("public/logo.png"),
+  ]);
+
+  assert.equal(
+    createHash("sha256").update(logoBytes).digest("hex"),
+    "a3968653c620c09d89a6d9af45db7cd8d9a16ab392a37d08a9efce310d3543ef",
+  );
+  assert.equal(logoBytes.readUInt32BE(16), 436);
+  assert.equal(logoBytes.readUInt32BE(20), 164);
+  assert.match(logo, /import logoImage from "\.\.\/\.\.\/\.\.\/public\/logo\.png"/);
+  assert.match(logo, /src=\{logoImage\}/);
+  assert.match(logo, /alt="Scalryx"/);
+  assert.match(logo, /preload\?: boolean/);
+  assert.match(logo, /preload=\{preload\}/);
+  assert.match(logo, /sizes="\(max-width: 639px\) 112px, 140px"/);
+  assert.doesNotMatch(
+    logo,
+    /compact|src="logo\.png"|--brand-primary|--brand-accent|\/\//,
+  );
 });
 
 test("header and mobile navigation offer only the approved anchor navigation", async () => {
@@ -154,8 +180,8 @@ test("hero keeps the live assessment inside a clean editorial composition", asyn
   assert.match(resultStep, /editorial-panel/);
   assert.match(resultStep, /metric-accent/);
   assert.match(header, /editorial-header/);
-  assert.match(logo, /--brand-primary/);
-  assert.match(logo, /--brand-accent/);
+  assert.match(logo, /src=\{logoImage\}/);
+  assert.doesNotMatch(logo, /--brand-primary|--brand-accent/);
 });
 
 test("blue roles are distributed across product and content surfaces", async () => {
