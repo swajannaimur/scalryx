@@ -29,7 +29,7 @@ Use a static Next.js image import and explicit responsive width classes.
 - Import public/logo.png into app/components/brand/logo.tsx so Next.js owns its intrinsic 436 × 164 dimensions.
 - Render the imported asset with height auto and a caller-controlled width.
 - Remove the unused compact prop and all commented legacy logo markup.
-- Add an optional priority prop so the above-the-fold header logo loads eagerly while the footer logo remains lazy.
+- Add an optional preload prop so the above-the-fold header logo loads eagerly while the footer logo remains lazy. Next.js 16 deprecates the former priority prop in favor of preload.
 - Preserve a meaningful Scalryx alt label.
 
 ## Component Contract
@@ -37,7 +37,7 @@ Use a static Next.js image import and explicit responsive width classes.
 Logo accepts:
 
 - className?: string for responsive visual width
-- priority?: boolean for the header loading strategy
+- preload?: boolean for the header loading strategy
 
 Logo always renders the complete user-supplied image. It never conditionally swaps artwork.
 
@@ -74,7 +74,7 @@ Inside the shared section shell:
 
 - Render the same logo asset at approximately 140px wide.
 - Preserve the existing footer structure, links, newsletter CTA, legal copy, and spacing.
-- The footer does not request priority loading.
+- The footer does not request preload loading.
 
 ## Accessibility
 
@@ -92,10 +92,10 @@ Coverage must prove:
 
 - Logo statically imports the exact public/logo.png asset.
 - Logo passes the imported asset to Next Image.
-- Logo exposes priority and className while removing compact.
+- Logo exposes preload and className while removing compact.
 - Logo contains no commented legacy mark.
-- Header passes priority and the approved responsive logo widths.
-- Footer passes its approved logo width without priority.
+- Header passes preload and the approved responsive logo widths.
+- Footer passes its approved logo width without preload.
 - Header uses a three-column grid with a centered navigation column and non-shrinking logo/actions.
 - Existing navigation destinations, mobile-menu behavior, touch-target assertions, footer contract, complete test suite, lint, and production build remain green.
 
