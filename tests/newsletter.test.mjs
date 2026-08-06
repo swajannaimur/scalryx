@@ -194,4 +194,5 @@ test("rendered newsletter dialog uses the light editorial treatment", async () =
   assert.match(markup, /editorial-panel/);
   assert.match(markup, /primary-button/);
   assert.match(markup, /icon-tile/);
+  assert.match(markup, /var\(--brand-accent\)/);
 });

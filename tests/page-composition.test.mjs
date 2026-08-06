@@ -102,7 +102,12 @@ test("editorial visual system exposes reusable light surfaces and restrained mot
   const css = await source("app/globals.css");
 
   assert.match(css, /color-scheme:\s*light/);
-  assert.match(css, /--brand-navy:/);
+  assert.match(css, /--brand-primary:\s*#123B82/i);
+  assert.match(css, /--brand-secondary:\s*#1E56A0/i);
+  assert.match(css, /--brand-accent:\s*#2F75C7/i);
+  assert.match(css, /--ink:\s*#0B1628/i);
+  assert.match(css, /--canvas:\s*#FFFFFF/i);
+  assert.match(css, /--canvas-soft:\s*#F5F8FC/i);
   assert.match(css, /--canvas-soft:/);
   assert.match(css, /\.editorial-panel\s*\{/);
   assert.match(css, /\.editorial-card\s*\{/);
@@ -110,27 +115,60 @@ test("editorial visual system exposes reusable light surfaces and restrained mot
   assert.match(css, /\.section-label\s*\{/);
   assert.match(css, /width:\s*min\(calc\(100% - 2rem\), 82rem\)/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\)/);
-  assert.doesNotMatch(css, /--electric-|ambient-orb|scan-line|text-gradient|blue-glow/);
+  assert.match(css, /\.brand-top-accent\s*\{/);
+  assert.match(css, /\.metric-accent\s*\{/);
+  assert.match(css, /\.primary-button[\s\S]*background:\s*var\(--brand-secondary\)/);
+  assert.match(css, /\.assessment-progress-fill[\s\S]*background:\s*var\(--brand-accent\)/);
+  assert.doesNotMatch(css, /--electric-|ambient-orb|scan-line|text-gradient|blue-glow|gradient|glow|glass/);
 });
 
 test("hero keeps the live assessment inside a clean editorial composition", async () => {
-  const [hero, businessStep, questionStep, resultStep, header] = await Promise.all([
+  const [hero, businessStep, questionStep, resultStep, header, logo] = await Promise.all([
     source("app/components/landing/hero-section.tsx"),
     source("app/components/assessment/business-type-step.tsx"),
     source("app/components/assessment/question-step.tsx"),
     source("app/components/assessment/result-step.tsx"),
     source("app/components/layout/header.tsx"),
+    source("app/components/brand/logo.tsx"),
   ]);
 
   assert.match(hero, /Business clarity, without the guesswork/);
   assert.match(hero, /data-editorial-hero/);
   assert.match(hero, /data-live-assessment/);
+  assert.match(hero, /data-brand-emphasis/);
+  assert.match(hero, /--brand-primary/);
+  assert.match(hero, /--brand-accent/);
   assert.doesNotMatch(hero, /data-capability-strip|ambient-orb|text-gradient/);
   assert.match(businessStep, /data-business-model-selector/);
+  assert.match(businessStep, /brand-top-accent/);
+  assert.match(businessStep, /data-selected-indicator/);
+  assert.match(businessStep, /--brand-accent-soft/);
   assert.match(businessStep, /editorial-panel/);
   assert.match(questionStep, /editorial-panel/);
+  assert.match(questionStep, /--brand-accent/);
   assert.match(resultStep, /editorial-panel/);
+  assert.match(resultStep, /metric-accent/);
   assert.match(header, /editorial-header/);
+  assert.match(logo, /--brand-primary/);
+  assert.match(logo, /--brand-accent/);
+});
+
+test("blue roles are distributed across product and content surfaces", async () => {
+  const sources = await Promise.all([
+    source("app/components/landing/audience-section.tsx"),
+    source("app/components/landing/trust-section.tsx"),
+    source("app/components/landing/resources-section.tsx"),
+    source("app/components/landing/videos-section.tsx"),
+    source("app/components/landing/deals-section.tsx"),
+    source("app/components/landing/newsletter-section.tsx"),
+    source("app/components/layout/footer.tsx"),
+  ]);
+  const markup = sources.join("\n");
+
+  assert.match(markup, /--brand-primary/);
+  assert.match(markup, /--brand-secondary/);
+  assert.match(markup, /--brand-accent/);
+  assert.match(markup, /--brand-accent-soft/);
 });
 
 test("every marketing section uses the editorial visual language", async () => {
