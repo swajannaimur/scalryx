@@ -57,13 +57,13 @@ test("previous answers survive backward and forward navigation", () => {
   });
   state = assessmentReducer(state, {
     type: "answer",
-    questionId: "saas-mrr",
-    optionId: "mrr-under-1k",
+    questionId: "saas-operating-profit-loss",
+    optionId: "saas-operating-profit-loss-0",
   });
   state = assessmentReducer(state, { type: "next" });
   state = assessmentReducer(state, { type: "previous" });
 
-  assert.equal(state.answers["saas-mrr"], "mrr-under-1k");
+  assert.equal(state.answers["saas-operating-profit-loss"], "saas-operating-profit-loss-0");
 });
 
 test("changing business with answers requires explicit reset confirmation", () => {
@@ -71,7 +71,7 @@ test("changing business with answers requires explicit reset confirmation", () =
     ...initialAssessmentState,
     businessType: "ecommerce",
     view: "questions",
-    answers: { "ecommerce-revenue": "revenue-under-5k" },
+    answers: { "ecommerce-net-margin": "ecommerce-net-margin-0" },
   };
   const pending = assessmentReducer(answered, {
     type: "request-business-change",
@@ -91,7 +91,7 @@ test("direct business selection cannot discard answers without confirmation", ()
     ...initialAssessmentState,
     businessType: "ecommerce",
     view: "questions",
-    answers: { "ecommerce-revenue": "revenue-under-5k" },
+    answers: { "ecommerce-net-margin": "ecommerce-net-margin-0" },
   };
 
   const pending = assessmentReducer(answered, {
@@ -109,8 +109,8 @@ test("selecting the active business with answers resumes its questions", () => {
     ...initialAssessmentState,
     businessType: "ecommerce",
     view: "business-type",
-    questionIndex: 4,
-    answers: { "ecommerce-revenue": "revenue-under-5k" },
+    questionIndex: 2,
+    answers: { "ecommerce-net-margin": "ecommerce-net-margin-0" },
   };
 
   const resumed = assessmentReducer(answered, {
@@ -120,7 +120,7 @@ test("selecting the active business with answers resumes its questions", () => {
 
   assert.equal(resumed.view, "questions");
   assert.equal(resumed.pendingBusinessType, null);
-  assert.equal(resumed.questionIndex, 4);
+  assert.equal(resumed.questionIndex, 2);
   assert.deepEqual(resumed.answers, answered.answers);
 });
 
@@ -128,7 +128,7 @@ test("coordinator resumes the active business instead of requesting a reset", ()
   const action = getBusinessSelectionAction(
     {
       businessType: "agency",
-      answers: { "agency-revenue": "revenue-under-10k" },
+      answers: { "agency-net-margin": "agency-net-margin-0" },
     },
     "agency",
   );
@@ -140,7 +140,7 @@ test("coordinator requests confirmation before changing an answered business", (
   const action = getBusinessSelectionAction(
     {
       businessType: "agency",
-      answers: { "agency-revenue": "revenue-under-10k" },
+      answers: { "agency-net-margin": "agency-net-margin-0" },
     },
     "saas",
   );
@@ -154,7 +154,7 @@ test("restart removes every answer and returns to business selection", () => {
       ...initialAssessmentState,
       view: "results",
       businessType: "service",
-      answers: { "service-revenue": "revenue-under-5k" },
+      answers: { "service-net-margin": "service-net-margin-0" },
     },
     { type: "restart" },
   );
@@ -163,39 +163,17 @@ test("restart removes every answer and returns to business selection", () => {
 });
 
 test("complete opens results only after every question has a valid answer", () => {
-  let state = assessmentReducer(initialAssessmentState, {
-    type: "select-business",
-    businessType: "ecommerce",
+  const complete = assessmentReducer(answerEveryQuestion("ecommerce"), {
+    type: "complete",
   });
 
-  for (let index = 0; index < 10; index += 1) {
-    const questionId =
-      index === 0
-        ? "ecommerce-revenue"
-        : [
-            "ecommerce-gross-margin",
-            "ecommerce-net-margin",
-            "ecommerce-revenue-trend",
-            "ecommerce-returning-customers",
-            "ecommerce-conversion-rate",
-            "ecommerce-inventory-control",
-            "ecommerce-cac-payback",
-            "ecommerce-workflow-automation",
-            "ecommerce-cash-runway",
-          ][index - 1];
-    const optionId = index === 0 ? "revenue-under-5k" : `${questionId}-2`;
-
-    state = assessmentReducer(state, { type: "answer", questionId, optionId });
-    if (index < 9) state = assessmentReducer(state, { type: "next" });
-  }
-
-  const complete = assessmentReducer(state, { type: "complete" });
   assert.equal(complete.view, "results");
   assert.equal(complete.error, "");
   assert.equal(firstMissingQuestionIndex(complete), -1);
+  assert.equal(questionBanks.ecommerce.questions.length, 3);
 });
 
-test("the tenth answered question completes into results", () => {
+test("the third answered question completes into results", () => {
   const complete = assessmentReducer(answerEveryQuestion("ecommerce"), {
     type: "complete",
   });
@@ -212,7 +190,7 @@ test("completion returns to the first missing question", () => {
   const questions = questionBanks.service.questions;
 
   for (const [index, question] of questions.entries()) {
-    if (index === 3) continue;
+    if (index === 1) continue;
     state = assessmentReducer(state, {
       type: "answer",
       questionId: question.id,
@@ -222,7 +200,7 @@ test("completion returns to the first missing question", () => {
 
   const incomplete = assessmentReducer(state, { type: "complete" });
   assert.equal(incomplete.view, "questions");
-  assert.equal(incomplete.questionIndex, 3);
+  assert.equal(incomplete.questionIndex, 1);
   assert.equal(incomplete.error, "Answer this question to see your result.");
 });
 
@@ -231,30 +209,17 @@ test("complete focuses the first missing question without escaping bank bounds",
     type: "select-business",
     businessType: "service",
   });
-  state = assessmentReducer(state, {
-    type: "answer",
-    questionId: "service-revenue",
-    optionId: "revenue-under-5k",
-  });
-  state = assessmentReducer(state, {
-    type: "answer",
-    questionId: "service-net-margin",
-    optionId: "service-net-margin-2",
-  });
-  state = assessmentReducer(state, {
-    type: "answer",
-    questionId: "service-capacity-booked",
-    optionId: "service-capacity-booked-2",
-  });
-  state = assessmentReducer(state, {
-    type: "answer",
-    questionId: "service-enquiry-conversion",
-    optionId: "service-enquiry-conversion-2",
-  });
+  for (const question of questionBanks.service.questions.slice(0, 2)) {
+    state = assessmentReducer(state, {
+      type: "answer",
+      questionId: question.id,
+      optionId: question.options[0].id,
+    });
+  }
 
   const incomplete = assessmentReducer(state, { type: "complete" });
-  assert.equal(firstMissingQuestionIndex(incomplete), 4);
-  assert.equal(incomplete.questionIndex, 4);
+  assert.equal(firstMissingQuestionIndex(incomplete), 2);
+  assert.equal(incomplete.questionIndex, 2);
   assert.equal(incomplete.view, "questions");
   assert.equal(incomplete.error, "Answer this question to see your result.");
 });
@@ -287,7 +252,7 @@ test("invalid question and option identifiers are ignored", () => {
   assert.equal(
     assessmentReducer(selected, {
       type: "answer",
-      questionId: "saas-mrr",
+      questionId: "saas-operating-profit-loss",
       optionId: "not-an-option",
     }),
     selected,
@@ -302,7 +267,7 @@ test("corrupted question indices normalize without escaping their bank", () => {
   const corrupted = { ...selected, questionIndex: 99 };
   const next = assessmentReducer(corrupted, { type: "next" });
 
-  assert.equal(next.questionIndex, 9);
+  assert.equal(next.questionIndex, 2);
   assert.equal(next.error, "Choose an answer to continue.");
 
   const negative = assessmentReducer(
@@ -339,11 +304,11 @@ test("reducer leaves frozen state and answer records unchanged", () => {
 
   const answered = assessmentReducer(selected, {
     type: "answer",
-    questionId: "ecommerce-revenue",
-    optionId: "revenue-under-5k",
+    questionId: "ecommerce-net-margin",
+    optionId: "ecommerce-net-margin-0",
   });
 
   assert.deepEqual(selected.answers, {});
   assert.notEqual(answered.answers, selected.answers);
-  assert.equal(answered.answers["ecommerce-revenue"], "revenue-under-5k");
+  assert.equal(answered.answers["ecommerce-net-margin"], "ecommerce-net-margin-0");
 });

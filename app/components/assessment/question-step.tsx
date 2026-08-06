@@ -4,6 +4,7 @@ interface QuestionStepProps {
   assessmentTitle: string;
   error: string;
   question: AssessmentQuestion;
+  questionCount: number;
   questionIndex: number;
   selectedOptionId: string;
   onAnswer: (questionId: string, optionId: string) => void;
@@ -19,6 +20,7 @@ export function QuestionStep({
   assessmentTitle,
   error,
   question,
+  questionCount,
   questionIndex,
   selectedOptionId,
   onAnswer,
@@ -29,7 +31,7 @@ export function QuestionStep({
   const guidanceId = `${headingId}-guidance`;
   const errorId = `${headingId}-error`;
   const questionNumber = questionIndex + 1;
-  const isFinalQuestion = questionNumber === 10;
+  const isFinalQuestion = questionNumber === questionCount;
 
   return (
     <div className="editorial-panel brand-top-accent rounded-[1.5rem] p-5 sm:p-7">
@@ -37,7 +39,7 @@ export function QuestionStep({
         <div>
           <p className="text-sm font-bold text-[var(--brand-primary)]">{assessmentTitle}</p>
           <p aria-current="step" className="mt-1 text-sm text-muted">
-            Question {questionNumber} of 10
+            Question {questionNumber} of {questionCount}
           </p>
         </div>
         <span className="rounded-full border border-[var(--brand-accent)]/20 bg-[var(--brand-accent-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-[var(--brand-accent)]">
@@ -47,8 +49,13 @@ export function QuestionStep({
 
       <div className="mt-5">
         <div
-          aria-label={`Assessment progress: question ${questionNumber} of 10`}
-          aria-valuemax={10}
+          aria-label={
+            "Assessment progress: question " +
+            questionNumber +
+            " of " +
+            questionCount
+          }
+          aria-valuemax={questionCount}
           aria-valuemin={1}
           aria-valuenow={questionNumber}
           className="h-2 overflow-hidden rounded-full bg-[var(--score-track)]"
@@ -58,7 +65,7 @@ export function QuestionStep({
             className="assessment-progress-fill h-full rounded-full transition-[width] duration-300"
             style={
               {
-                "--assessment-progress": `${questionNumber * 10}%`,
+                "--assessment-progress": (questionNumber / questionCount) * 100 + "%",
               } as React.CSSProperties
             }
           />

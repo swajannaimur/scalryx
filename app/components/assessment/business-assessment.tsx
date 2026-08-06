@@ -37,9 +37,9 @@ export function BusinessAssessment() {
     dispatch(selectionAction);
   }
 
-  const currentQuestion = state.businessType
-    ? questionBanks[state.businessType].questions[state.questionIndex]
-    : null;
+  const selectedBank = state.businessType ? questionBanks[state.businessType] : null;
+  const questionCount = selectedBank?.questions.length ?? 0;
+  const currentQuestion = selectedBank?.questions[state.questionIndex] ?? null;
 
   useEffect(() => {
     if (!state.pendingBusinessType) return;
@@ -137,14 +137,19 @@ export function BusinessAssessment() {
       {state.view === "business-type" ? (
         <BusinessTypeStep onSelect={selectBusiness} selectedType={state.businessType} />
       ) : null}
-      {state.view === "questions" && state.businessType && currentQuestion ? (
+      {state.view === "questions" && selectedBank && currentQuestion ? (
         <QuestionStep
-          assessmentTitle={questionBanks[state.businessType].title}
+          assessmentTitle={selectedBank.title}
           error={state.error}
           onAnswer={(questionId, optionId) => dispatch({ type: "answer", questionId, optionId })}
-          onNext={() => dispatch({ type: state.questionIndex === 9 ? "complete" : "next" })}
+          onNext={() =>
+            dispatch({
+              type: state.questionIndex === questionCount - 1 ? "complete" : "next",
+            })
+          }
           onPrevious={() => dispatch({ type: "previous" })}
           question={currentQuestion}
+          questionCount={questionCount}
           questionIndex={state.questionIndex}
           selectedOptionId={state.answers[currentQuestion.id] ?? ""}
         />

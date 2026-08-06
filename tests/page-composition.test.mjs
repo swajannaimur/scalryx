@@ -233,3 +233,16 @@ test("site ships one permanent light theme without a theme runtime", async () =>
   assert.doesNotMatch(header, /ThemeToggle|theme-toggle/);
   assert.doesNotMatch(layout, /theme-state|themeInitializer|dangerouslySetInnerHTML/);
 });
+
+test("assessment navigation and progress derive their question count from the selected bank", async () => {
+  const [businessAssessment, questionStep] = await Promise.all([
+    source("app/components/assessment/business-assessment.tsx"),
+    source("app/components/assessment/question-step.tsx"),
+  ]);
+
+  assert.match(businessAssessment, /questions\.length/);
+  assert.match(questionStep, /questionCount/);
+  assert.match(questionStep, /questionNumber \/ questionCount/);
+  assert.doesNotMatch(businessAssessment, /questionIndex === 9/);
+  assert.doesNotMatch(questionStep, /of 10|aria-valuemax=\{10\}|questionNumber \* 10/);
+});
