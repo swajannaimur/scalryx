@@ -64,7 +64,7 @@ export function BusinessTypeStep({
           What type of business do you run?
         </h2>
         <p className="mt-2 text-sm leading-6 text-muted">
-          Your questions and recommendations adapt to how your business operates.
+          Three focused questions adapt to how your business operates.
         </p>
       </div>
 

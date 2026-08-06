@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
-import { heroComposition, heroContent } from "../app/data/hero-content.ts";
+import { heroComposition, heroContent as heroContentData } from "../app/data/hero-content.ts";
 import { navItems } from "../app/data/site-content.ts";
 
 const source = (file) => readFile(new URL(`../${file}`, import.meta.url), "utf8");
@@ -42,19 +42,23 @@ test("header and mobile navigation offer only the approved anchor navigation", a
   assert.doesNotMatch(mobileMenu, /Start Free Audit|ButtonLink/);
 });
 
-test("hero content preserves the approved assessment-first promise", () => {
-  assert.deepEqual(heroContent, {
+test("hero content preserves the approved assessment-first promise", async () => {
+  const heroContent = await source("app/data/hero-content.ts");
+
+  assert.match(heroContent, /three focused questions/i);
+  assert.match(heroContent, /About one minute/);
+  assert.deepEqual(heroContentData, {
     eyebrow: "Business health assessment",
     heading: "Business clarity, without the guesswork",
-    body: "Complete a private five-minute business health assessment and get a clear score, practical priorities, and tools worth considering.",
+    body: "Answer three focused questions about your business and get a clear health score, operating status, and practical tools worth considering.",
     trustPoints: [
-      "Five minutes",
+      "About one minute",
       "No account required",
       "Private assessment",
       "Actionable results",
     ],
   });
-  assert.equal(heroComposition.content, heroContent);
+  assert.equal(heroComposition.content, heroContentData);
   assert.equal(heroComposition.embeddedTool, "business-health-assessment");
 });
 
@@ -204,7 +208,10 @@ test("editorial announcement can wrap safely on narrow screens", async () => {
 });
 
 test("assessment results omit the requested detailed analysis blocks", async () => {
-  const resultStep = await source("app/components/assessment/result-step.tsx");
+  const [businessStep, resultStep] = await Promise.all([
+    source("app/components/assessment/business-type-step.tsx"),
+    source("app/components/assessment/result-step.tsx"),
+  ]);
 
   assert.doesNotMatch(resultStep, /Category breakdown/);
   assert.doesNotMatch(resultStep, /getStrengthsPresentation/);
@@ -216,6 +223,16 @@ test("assessment results omit the requested detailed analysis blocks", async () 
   assert.match(resultStep, /Tools worth considering/);
   assert.match(resultStep, /Join the newsletter/);
   assert.match(resultStep, /Restart assessment/);
+  assert.match(businessStep, /Three focused questions adapt to how your business operates\./);
+  assert.match(resultStep, /case "Loss"/);
+  assert.match(resultStep, /case "Average"/);
+  assert.match(resultStep, /case "Profit"/);
+  assert.match(resultStep, /The business is currently operating at a loss\. Protect cash and address the weakest driver first\./);
+  assert.match(resultStep, /The business is around break-even or producing a thin margin, with clear room to strengthen its fundamentals\./);
+  assert.match(resultStep, /The business is operating profitably\. Use the health score to identify where that position can become more resilient\./);
+  assert.match(resultStep, /\{result\.label\}/);
+  assert.doesNotMatch(resultStep, /Critical|Needs attention|Healthy|Strong/);
+  assert.doesNotMatch(resultStep, /Revenue context|contextAnswer/);
 });
 
 test("site ships one permanent light theme without a theme runtime", async () => {

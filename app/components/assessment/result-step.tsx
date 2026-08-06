@@ -9,14 +9,12 @@ interface ResultStepProps {
 
 function scoreSummary(label: AssessmentResult["label"]) {
   switch (label) {
-    case "Critical":
-      return "Focus on the highest-impact risks before investing in more growth.";
-    case "Needs attention":
-      return "Your business has a workable base, with a few priorities to strengthen.";
-    case "Healthy":
-      return "Your fundamentals are in good shape; keep improving the weaker areas.";
-    case "Strong":
-      return "Your business shows strong operating fundamentals and room to compound them.";
+    case "Loss":
+      return "The business is currently operating at a loss. Protect cash and address the weakest driver first.";
+    case "Average":
+      return "The business is around break-even or producing a thin margin, with clear room to strengthen its fundamentals.";
+    case "Profit":
+      return "The business is operating profitably. Use the health score to identify where that position can become more resilient.";
   }
 }
 
@@ -55,9 +53,6 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
             </p>
           </div>
         </div>
-        <span className="rounded-full border border-line bg-[var(--canvas-soft)] px-3 py-2 text-xs font-semibold text-muted">
-          Revenue context: {result.contextAnswer}
-        </span>
       </div>
 
       <p className="mt-5 rounded-xl border border-line bg-[var(--canvas-soft)] px-3 py-3 text-xs leading-5 text-muted">
