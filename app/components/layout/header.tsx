@@ -22,7 +22,7 @@ export function Header() {
         >
           {navItems.map((item) => (
             <a
-              className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm rounded-lg px-3 font-semibold text-muted transition hover:bg-[var(--brand-soft)] hover:text-[var(--brand-navy)]"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm rounded-lg px-3 font-semibold text-muted transition hover:bg-[var(--brand-accent-soft)] hover:text-[var(--brand-accent)]"
               href={item.href}
               key={item.label}
             >

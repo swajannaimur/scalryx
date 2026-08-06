@@ -32,15 +32,15 @@ export function QuestionStep({
   const isFinalQuestion = questionNumber === 10;
 
   return (
-    <div className="editorial-panel rounded-[1.5rem] p-5 sm:p-7">
+    <div className="editorial-panel brand-top-accent rounded-[1.5rem] p-5 sm:p-7">
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-5">
         <div>
-          <p className="text-sm font-bold text-[var(--brand-navy)]">{assessmentTitle}</p>
+          <p className="text-sm font-bold text-[var(--brand-primary)]">{assessmentTitle}</p>
           <p aria-current="step" className="mt-1 text-sm text-muted">
             Question {questionNumber} of 10
           </p>
         </div>
-        <span className="rounded-full border border-line bg-[var(--canvas-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-muted">
+        <span className="rounded-full border border-[var(--brand-accent)]/20 bg-[var(--brand-accent-soft)] px-3 py-1.5 text-xs font-bold uppercase tracking-[0.08em] text-[var(--brand-accent)]">
           {displayCategory(question.category)}
         </span>
       </div>
@@ -86,7 +86,7 @@ export function QuestionStep({
               <label
                 className={`editorial-card flex min-h-12 cursor-pointer items-center gap-3 rounded-xl px-4 py-3 text-sm ${
                   selected
-                    ? "border-[var(--brand-navy)] bg-[var(--brand-soft)] text-content"
+                    ? "border-[var(--brand-accent)] bg-[var(--brand-accent-soft)] text-[var(--brand-primary)]"
                     : "text-muted hover:text-content"
                 }`}
                 htmlFor={optionId}
@@ -95,7 +95,7 @@ export function QuestionStep({
                 <input
                   aria-describedby={error ? `${guidanceId} ${errorId}` : guidanceId}
                   checked={selected}
-                  className="size-4 accent-[var(--brand-navy)]"
+                  className="size-4 accent-[var(--brand-accent)]"
                   id={optionId}
                   name={question.id}
                   onChange={() => onAnswer(question.id, option.id)}

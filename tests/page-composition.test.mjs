@@ -132,7 +132,8 @@ test("hero keeps the live assessment inside a clean editorial composition", asyn
     source("app/components/brand/logo.tsx"),
   ]);
 
-  assert.match(hero, /Business clarity, without the guesswork/);
+  assert.match(hero, /Business clarity,/);
+  assert.match(hero, /without the guesswork/);
   assert.match(hero, /data-editorial-hero/);
   assert.match(hero, /data-live-assessment/);
   assert.match(hero, /data-brand-emphasis/);
@@ -226,7 +227,7 @@ test("site ships one permanent light theme without a theme runtime", async () =>
   const rootTokens = css.match(/:root\s*\{([\s\S]*?)\n\}/)?.[1] ?? "";
 
   assert.match(rootTokens, /color-scheme:\s*light/);
-  assert.match(rootTokens, /--canvas:\s*#ffffff/);
+  assert.match(rootTokens, /--canvas:\s*#ffffff/i);
   assert.doesNotMatch(css, /\[data-theme=/);
   assert.doesNotMatch(css, /prefers-color-scheme/);
   assert.doesNotMatch(header, /ThemeToggle|theme-toggle/);

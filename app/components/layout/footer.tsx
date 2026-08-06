@@ -31,7 +31,7 @@ export function Footer() {
                   if (link.label === "Newsletter") {
                     return (
                       <li key={link.label}>
-                        <NewsletterTrigger className="inline-flex min-h-11 items-center text-sm text-left leading-6 text-muted transition hover:text-[var(--brand-navy)]">
+                        <NewsletterTrigger className="inline-flex min-h-11 items-center text-left text-sm leading-6 text-muted transition hover:text-[var(--brand-accent)]">
                           {link.label}
                         </NewsletterTrigger>
                       </li>
@@ -41,7 +41,7 @@ export function Footer() {
                   if (link.label === "Affiliate Disclosure") {
                     return (
                       <li key={link.label}>
-                        <a className="inline-flex min-h-11 items-center text-sm leading-6 text-muted transition hover:text-[var(--brand-navy)]" href="#affiliate-disclosure">
+                        <a className="inline-flex min-h-11 items-center text-sm leading-6 text-muted transition hover:text-[var(--brand-accent)]" href="#affiliate-disclosure">
                           {link.label}
                         </a>
                       </li>
@@ -50,7 +50,7 @@ export function Footer() {
 
                   return (
                     <li key={link.label}>
-                      <a className="inline-flex min-h-11 items-center text-sm leading-6 text-muted transition hover:text-[var(--brand-navy)]" href={link.href}>
+                      <a className="inline-flex min-h-11 items-center text-sm leading-6 text-muted transition hover:text-[var(--brand-accent)]" href={link.href}>
                         {link.label}
                       </a>
                     </li>

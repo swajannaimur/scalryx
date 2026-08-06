@@ -29,7 +29,7 @@ export function MobileMenu() {
           <div className="flex flex-col">
             {navItems.map((item) => (
               <a
-                className="flex min-h-11 items-center rounded-xl px-3 py-3 text-sm font-semibold text-muted transition hover:bg-[var(--brand-soft)] hover:text-[var(--brand-navy)]"
+                className="flex min-h-11 items-center rounded-xl px-3 py-3 text-sm font-semibold text-muted transition hover:bg-[var(--brand-accent-soft)] hover:text-[var(--brand-accent)]"
                 href={item.href}
                 key={item.label}
                 onClick={() => setOpen(false)}

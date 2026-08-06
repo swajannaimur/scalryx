@@ -17,7 +17,7 @@ export function HeroSection() {
           <div className="min-w-0 lg:py-8">
             <p className="section-label animate-stagger-1">{content.eyebrow}</p>
             <h1 className="animate-stagger-2 mt-6 max-w-[42rem] text-[42px] font-bold leading-[1.04] tracking-[-0.05em] text-content sm:text-[56px] xl:text-[64px]">
-              Business clarity, without the guesswork
+              Business clarity, <span className="text-[var(--brand-primary)]" data-brand-emphasis>without the guesswork</span>
             </h1>
             <p className="animate-stagger-3 mt-6 max-w-[35rem] text-base leading-8 text-muted sm:text-lg">
               {content.body}
@@ -53,7 +53,10 @@ export function HeroSection() {
             id="assessment"
           >
             <div className="mb-3 flex items-center justify-between gap-4 px-1 text-xs font-bold uppercase tracking-[0.12em] text-subtle">
-              <span>Live assessment</span>
+              <span className="flex items-center gap-2 text-[var(--brand-primary)]">
+                <span aria-hidden="true" className="size-2 rounded-full bg-[var(--brand-accent)]" />
+                Live assessment
+              </span>
               <span className="normal-case tracking-normal text-muted">Private in this browser</span>
             </div>
             <BusinessAssessment />

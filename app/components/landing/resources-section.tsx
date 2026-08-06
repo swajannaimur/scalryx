@@ -31,7 +31,7 @@ export function ResourcesSection() {
             const content = (
               <>
                 <div className="flex items-center justify-between gap-4">
-                  <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.09em] text-[var(--brand-navy)]">
+                  <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.09em] text-[var(--brand-accent)]">
                     <BookOpen aria-hidden="true" size={15} />
                     {article.category}
                   </span>
@@ -41,7 +41,7 @@ export function ResourcesSection() {
                   {article.title}
                 </h3>
                 <p className="mt-4 max-w-2xl text-sm leading-7 text-muted">{article.summary}</p>
-                <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-navy)]">
+                <span className="mt-8 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-primary)]">
                   {article.href ? "Read article" : "Editorial guide"}
                   {article.href ? <ArrowUpRight aria-hidden="true" size={15} /> : null}
                 </span>

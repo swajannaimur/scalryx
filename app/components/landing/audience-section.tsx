@@ -67,10 +67,10 @@ export function AudienceSection() {
                     <span aria-hidden="true" className="icon-tile flex size-11 items-center justify-center rounded-xl">
                       <Icon size={20} strokeWidth={1.8} />
                     </span>
-                    <span className="text-sm font-bold tabular-nums text-subtle">0{index + 1}</span>
+                    <span className="metric-accent text-sm font-bold tabular-nums text-[var(--brand-accent)]">0{index + 1}</span>
                   </div>
                   <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-content">{audience.title}</h3>
-                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--brand-navy)]">Operating challenge</p>
+                  <p className="mt-3 text-sm font-bold uppercase tracking-[0.08em] text-[var(--brand-primary)]">Operating challenge</p>
                   <p className="mt-1 text-sm leading-6 text-muted">{detail.challenge}</p>
                   <div className="mt-5 border-t border-line pt-4">
                     <p className="text-sm font-bold text-content">What the assessment clarifies</p>

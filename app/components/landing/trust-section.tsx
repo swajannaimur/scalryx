@@ -43,7 +43,7 @@ export function TrustSection() {
                 </span>
                 <h3 className="mt-5 text-lg font-bold text-content">{pillar.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted">{pillar.description}</p>
-                <p className="mt-6 border-t border-line pt-4 text-sm font-bold text-[var(--brand-navy)]">
+                <p className="mt-6 border-t border-line pt-4 text-sm font-bold text-[var(--brand-secondary)]">
                   {trustFacts[index]}
                 </p>
               </article>

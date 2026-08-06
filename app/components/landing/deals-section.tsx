@@ -36,13 +36,13 @@ export function DealsSection() {
                 <span className="icon-tile flex size-11 items-center justify-center rounded-xl text-sm font-black">
                   {deal.title.slice(0, 2).toUpperCase()}
                 </span>
-                <span className="rounded-full bg-[var(--canvas-soft)] px-3 py-1.5 text-xs font-bold text-muted">
+                <span className="rounded-full bg-[var(--brand-primary-soft)] px-3 py-1.5 text-xs font-bold text-[var(--brand-primary)]">
                   {deal.audience}
                 </span>
               </div>
               <h3 className="mt-7 text-2xl font-bold tracking-[-0.03em] text-content">{deal.title}</h3>
               <p className="mt-3 text-sm leading-6 text-muted">{deal.description}</p>
-              <span className="mt-auto flex items-center justify-between gap-3 border-t border-line pt-5 text-sm font-bold text-[var(--brand-navy)]">
+              <span className="mt-auto flex items-center justify-between gap-3 border-t border-line pt-5 text-sm font-bold text-[var(--brand-accent)]">
                 {deal.offer}
                 <ArrowUpRight aria-hidden="true" className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={17} />
               </span>

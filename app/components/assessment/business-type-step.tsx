@@ -2,6 +2,7 @@ import {
   ArrowRight,
   BriefcaseBusiness,
   ChartNoAxesCombined,
+  Check,
   Store,
   Wrench,
 } from "lucide-react";
@@ -50,13 +51,13 @@ export function BusinessTypeStep({
 }: BusinessTypeStepProps) {
   return (
     <div
-      className="editorial-panel rounded-[1.5rem] p-5 sm:p-7"
+      className="editorial-panel brand-top-accent rounded-[1.5rem] p-5 sm:p-7"
       data-business-model-selector
     >
       <div className="border-b border-line pb-5">
         <p className="section-label">Choose your model</p>
         <h2
-          className="mt-4 text-2xl font-bold tracking-[-0.03em] text-content sm:text-[1.85rem]"
+          className="mt-4 text-2xl font-bold tracking-[-0.03em] text-[var(--brand-primary)] sm:text-[1.85rem]"
           data-assessment-focus
           tabIndex={-1}
         >
@@ -79,7 +80,7 @@ export function BusinessTypeStep({
               <label
                 className={`editorial-card group flex min-h-36 cursor-pointer flex-col rounded-2xl p-4 focus-within:ring-4 focus-within:ring-[var(--focus-ring)] ${
                   selected
-                    ? "border-[var(--brand-navy)] bg-[var(--brand-soft)]"
+                    ? "border-[var(--brand-accent)] bg-[var(--brand-accent-soft)]"
                     : ""
                 }`}
                 htmlFor={inputId}
@@ -101,11 +102,21 @@ export function BusinessTypeStep({
                   >
                     <Icon size={18} strokeWidth={1.8} />
                   </span>
-                  <ArrowRight
-                    aria-hidden="true"
-                    className="mt-1 text-subtle transition-transform group-hover:translate-x-1 group-hover:text-[var(--brand-navy)]"
-                    size={17}
-                  />
+                  {selected ? (
+                    <span
+                      aria-hidden="true"
+                      className="grid size-7 place-items-center rounded-full bg-[var(--brand-accent)] text-white"
+                      data-selected-indicator
+                    >
+                      <Check size={15} strokeWidth={2.5} />
+                    </span>
+                  ) : (
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="mt-1 text-subtle transition-transform group-hover:translate-x-1 group-hover:text-[var(--brand-accent)]"
+                      size={17}
+                    />
+                  )}
                 </span>
                 <span className="mt-4 block text-base font-bold text-content">
                   {choice.label}

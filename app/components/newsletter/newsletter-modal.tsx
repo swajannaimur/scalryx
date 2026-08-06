@@ -50,13 +50,13 @@ export function NewsletterModalContent({
       aria-describedby="newsletter-description"
       aria-labelledby="newsletter-title"
       aria-modal="true"
-      className="editorial-panel modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-[1.75rem] p-5 sm:p-7"
+      className="editorial-panel brand-top-accent modal-dialog max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-[1.75rem] p-5 sm:p-7"
       ref={dialogRef}
       role="dialog"
     >
       <div className="flex items-start justify-between gap-4 border-b border-line pb-5">
         <div className="flex gap-4">
-          <span className="icon-tile flex size-11 shrink-0 items-center justify-center rounded-xl">
+          <span className="icon-tile flex size-11 shrink-0 items-center justify-center rounded-xl text-[var(--brand-accent)]">
             <Mail aria-hidden="true" size={20} />
           </span>
           <div>
@@ -83,7 +83,7 @@ export function NewsletterModalContent({
         <div
           aria-atomic="true"
           aria-live="polite"
-          className="editorial-card mt-6 rounded-2xl bg-[var(--brand-soft)] p-5"
+          className="editorial-card mt-6 rounded-2xl bg-[var(--brand-accent-soft)] p-5"
           role="status"
         >
           <span className="icon-tile mb-4 flex size-11 items-center justify-center rounded-xl text-[var(--success)]">
@@ -108,7 +108,7 @@ export function NewsletterModalContent({
             }
             aria-invalid={Boolean(state.error)}
             autoComplete="email"
-            className="mt-2 min-h-12 w-full rounded-xl border border-line bg-white px-3 text-sm text-content outline-none transition placeholder:text-subtle focus:border-[var(--brand-navy)] focus:ring-4 focus:ring-[var(--focus-ring)]"
+            className="mt-2 min-h-12 w-full rounded-xl border border-line bg-white px-3 text-sm text-content outline-none transition placeholder:text-subtle focus:border-[var(--brand-accent)] focus:ring-4 focus:ring-[var(--focus-ring)]"
             disabled={isSubmitting}
             id="newsletter-email"
             name="email"

@@ -22,7 +22,7 @@ function scoreSummary(label: AssessmentResult["label"]) {
 
 export function ResultStep({ result, onRestart }: ResultStepProps) {
   return (
-    <div className="editorial-panel rounded-[1.5rem] p-5 sm:p-7">
+    <div className="editorial-panel brand-top-accent rounded-[1.5rem] p-5 sm:p-7">
       <div className="flex items-center justify-between gap-3 border-b border-line pb-5">
         <p className="section-label">Your result</p>
         <span className="text-xs font-bold uppercase tracking-[0.1em] text-subtle">
@@ -37,14 +37,14 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
             className="score-ring"
             role="img"
           >
-            <p className="text-center text-3xl font-bold tracking-[-0.04em] text-[var(--brand-navy)]">
+            <p className="metric-accent text-center text-3xl font-bold tracking-[-0.04em] text-[var(--brand-accent)]">
               {result.score}
               <span className="block text-xs font-semibold tracking-normal text-muted">out of 100</span>
             </p>
           </div>
           <div className="min-w-0 flex-1">
             <h2
-              className="text-3xl font-bold tracking-[-0.035em] text-content"
+              className="text-3xl font-bold tracking-[-0.035em] text-[var(--brand-primary)]"
               data-assessment-focus
               tabIndex={-1}
             >
@@ -77,7 +77,7 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
             >
               <span className="flex items-center justify-between gap-2 text-sm font-bold text-content">
                 {recommendation.name}
-                <ArrowUpRight aria-hidden="true" className="text-subtle transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={15} />
+                <ArrowUpRight aria-hidden="true" className="text-[var(--brand-accent)] transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" size={15} />
               </span>
               <span className="mt-1 block text-sm leading-5 text-muted">{recommendation.description}</span>
             </a>
@@ -85,9 +85,9 @@ export function ResultStep({ result, onRestart }: ResultStepProps) {
         </div>
       </section>
 
-      <div className="mt-7 flex flex-col gap-4 rounded-2xl border border-[#d8e0e7] bg-[var(--brand-soft)] p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-7 flex flex-col gap-4 rounded-2xl border border-[var(--line-strong)] bg-[var(--brand-primary-soft)] p-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h3 className="text-sm font-bold text-content">Get practical growth notes in your inbox.</h3>
+          <h3 className="text-sm font-bold text-[var(--brand-primary)]">Get practical growth notes in your inbox.</h3>
           <p className="mt-1 text-sm leading-5 text-muted">One useful issue at a time. No account required.</p>
         </div>
         <NewsletterTrigger className="primary-button inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl px-4 text-sm font-bold">

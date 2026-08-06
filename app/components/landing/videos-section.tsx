@@ -27,13 +27,13 @@ export function VideosSection() {
           {videos.map((video, index) => {
             const content = (
               <>
-                <div className="relative flex aspect-[16/9] items-end justify-between overflow-hidden rounded-xl border border-[#d8e0e7] bg-[var(--brand-soft)] p-4 text-[var(--brand-navy)]">
+                <div className="relative flex aspect-[16/9] items-end justify-between overflow-hidden rounded-xl border border-line bg-[var(--brand-accent-soft)] p-4 text-[var(--brand-primary)]">
                   <span className="icon-tile flex size-11 items-center justify-center rounded-xl bg-white">
                     <Video aria-hidden="true" size={20} strokeWidth={1.8} />
                   </span>
-                  <span className="text-4xl font-bold tracking-[-0.06em] text-[#c6d2de]">0{index + 1}</span>
+                  <span className="metric-accent text-4xl font-bold tracking-[-0.06em] text-[var(--brand-accent)]/35">0{index + 1}</span>
                 </div>
-                <div className="mt-5 flex items-center justify-between gap-3 text-xs font-bold uppercase tracking-[0.08em] text-[var(--brand-navy)]">
+                <div className="mt-5 flex items-center justify-between gap-3 text-xs font-bold uppercase tracking-[0.08em] text-[var(--brand-secondary)]">
                   <span>{video.category}</span>
                   <span className="text-subtle">{video.meta}</span>
                 </div>

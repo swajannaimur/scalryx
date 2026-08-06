@@ -32,12 +32,12 @@ export function NewsletterSection() {
             </p>
           </div>
 
-          <div className="flex min-h-64 flex-col justify-between border-t border-line bg-[var(--brand-soft)] p-6 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+          <div className="flex min-h-64 flex-col justify-between border-t border-line bg-[var(--brand-accent-soft)] p-6 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
             <span aria-hidden="true" className="icon-tile flex size-14 items-center justify-center rounded-2xl bg-white">
               <Mail size={24} strokeWidth={1.8} />
             </span>
             <div>
-              <p className="text-sm font-bold text-[var(--brand-navy)]">What arrives</p>
+              <p className="text-sm font-bold text-[var(--brand-secondary)]">What arrives</p>
               <p className="mt-3 max-w-sm text-xl font-bold leading-8 tracking-[-0.02em] text-content">
                 Useful signals, carefully edited for people running real businesses.
               </p>
