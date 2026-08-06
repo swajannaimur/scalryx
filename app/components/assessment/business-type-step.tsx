@@ -17,25 +17,25 @@ const businessChoices: readonly {
   {
     type: "ecommerce",
     label: "Ecommerce",
-    description: "Margins, conversion, inventory, retention, and cash health.",
+    description: "Net profit, revenue trend, and cash coverage for inventory and operations.",
     icon: Store,
   },
   {
     type: "agency",
     label: "Agency",
-    description: "Pipeline, delivery capacity, client mix, and recurring revenue.",
+    description: "Net profit, healthy team utilization, and operating runway.",
     icon: BriefcaseBusiness,
   },
   {
     type: "saas",
     label: "SaaS",
-    description: "Growth quality, churn, activation, runway, and unit economics.",
+    description: "Operating profit, recurring revenue trend, and cash runway.",
     icon: ChartNoAxesCombined,
   },
   {
     type: "service",
     label: "Service Business",
-    description: "Lead flow, capacity, collections, repeat work, and owner reliance.",
+    description: "Net profit, booked service capacity, and invoice collection.",
     icon: Wrench,
   },
 ];

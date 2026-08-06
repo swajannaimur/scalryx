@@ -224,6 +224,22 @@ test("assessment results omit the requested detailed analysis blocks", async () 
   assert.match(resultStep, /Join the newsletter/);
   assert.match(resultStep, /Restart assessment/);
   assert.match(businessStep, /Three focused questions adapt to how your business operates\./);
+  assert.match(
+    businessStep,
+    /description: "Net profit, revenue trend, and cash coverage for inventory and operations\."/,
+  );
+  assert.match(
+    businessStep,
+    /description: "Net profit, healthy team utilization, and operating runway\."/,
+  );
+  assert.match(
+    businessStep,
+    /description: "Operating profit, recurring revenue trend, and cash runway\."/,
+  );
+  assert.match(
+    businessStep,
+    /description: "Net profit, booked service capacity, and invoice collection\."/,
+  );
   assert.match(resultStep, /case "Loss"/);
   assert.match(resultStep, /case "Average"/);
   assert.match(resultStep, /case "Profit"/);
